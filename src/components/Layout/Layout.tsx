@@ -6,10 +6,13 @@ interface IProps {
 }
 
 const Layout = ({ children }: IProps) => (
-  <>
+  <div className="flex min-h-screen flex-col p-0">
     <Header />
-    <main>{children}</main>
-  </>
+    <main className="grow">{children}</main>
+    <footer>
+      <p>Footer</p>
+    </footer>
+  </div>
 );
 
 export default Layout;
