@@ -1,19 +1,12 @@
-import Image from 'next/image';
+import React from 'react';
+import { ParticlesBackground } from '@/components/ui/Particles/Particles';
 
-import bg from '@/assets/images/bg.webp';
-
-const Home = () => (
-  <>
-    <Image
-      alt={'bg'}
-      src={bg}
-      placeholder="blur"
-      width={0}
-      height={0}
-      sizes="100vw"
-      style={{ width: '100%', height: 'auto', objectFit: 'cover', maxHeight: 'calc(100vh - 6rem)' }}
-    />
-  </>
-);
+const Home = () => {
+  return (
+    <div className={'bg-gradient-to-br from-[#7c22ce] via-60% via-[#3c1a98] to-[#00197c] w-full'}>
+      <ParticlesBackground />
+    </div>
+  );
+};
 
 export default Home;
