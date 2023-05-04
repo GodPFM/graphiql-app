@@ -12,14 +12,14 @@ export const ParticlesBackground = () => {
   }, []);
 
   return (
-    <div className={'w-full h-full'}>
+    <div className={'absolute top-0 left-0 w-full h-full z-0'}>
       <Particles
-        className={'absolute top-0 left-0 w-full h-full'}
+        className={'w-full h-full'}
         init={particlesInit}
         loaded={particlesLoaded}
         options={{
           fpsLimit: 120,
-          fullScreen: { enable: false, zIndex: 0 },
+          fullScreen: { enable: false, zIndex: -1 },
           particles: {
             color: {
               value: '#d1e8ec',
