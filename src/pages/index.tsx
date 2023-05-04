@@ -18,7 +18,7 @@ const Home = () => {
       <ParticlesBackground />
       <div
         className={
-          'relative w-full h-full flex justify-around items-center z-10 pr-[3.7%] pl-[3.7%] z-10 pt-5 pb-5'
+          'relative w-full h-full flex justify-around items-center z-10 pr-[3.7%] pl-[3.7%] pt-5 pb-5'
         }
       >
         <MainCodeBlock
