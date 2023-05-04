@@ -15,6 +15,8 @@ module.exports = {
         'color-dark-grey': '#383D5B',
         'color-dark-purple': '#1B2240',
         'color-dark-blue': '#566992',
+        'color-purple': '#3F20BA',
+        'color-purple-hover': '#311C87',
       },
       fontFamily: {
         SourceSansPro: ['Source Sans Pro', 'Segoe UI', 'Tahoma', 'Geneva', 'Verdana', 'sans-serif'],
