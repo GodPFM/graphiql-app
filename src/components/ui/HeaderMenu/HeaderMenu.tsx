@@ -19,14 +19,14 @@ const HeaderMenu = (props: IProps) => (
   >
     <Button
       variant="text"
-      className="font-SourceSansPro text-white leading-5 normal-case text-[14px]"
+      className="font-SourceSansPro font-semibold text-white leading-5 normal-case text-[14px]"
       onClick={props.closeBurger}
     >
       Sign in
     </Button>
     <Button
       variant="contained"
-      className="bg-color-dark-blue h-[28px] normal-case text-[14px]"
+      className="bg-color-dark-blue font-semibold h-[28px] normal-case text-[14px]"
       onClick={props.closeBurger}
     >
       Log in
