@@ -9,8 +9,9 @@ const Form = () => {
   return (
     <form>
       <Paper className="w-[25rem] h-[30rem] p-[1.2rem]" elevation={3}>
-        {/* <Image className="m-0 fill-color-purple w-[1rem] h-[1rem]" src={logo} alt={'logo'} /> */}
-        <Logo size="2rem" color="color-purple" />
+        <Stack>
+          <Logo size="2rem" classes="fill-color-purple" /> <span>GraphiQL</span>
+        </Stack>
         <Stack spacing={4}>
           <h2 className="font-semibold ">Sign in</h2>
           <TextField label="Email Address" variant="outlined" />
