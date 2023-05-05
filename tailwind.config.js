@@ -15,6 +15,7 @@ module.exports = {
         'color-dark-grey': '#383D5B',
         'color-dark-purple': '#1B2240',
         'color-dark-blue': '#566992',
+        'color-dark-blue-hover': '#003D5B',
         'color-purple': '#3F20BA',
         'color-purple-hover': '#311C87',
         'color-paper': '#F3F4F6',
