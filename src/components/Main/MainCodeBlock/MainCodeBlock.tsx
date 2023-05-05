@@ -12,7 +12,7 @@ export const MainCodeBlock = (props: IProps) => {
   return (
     <div
       className={
-        'bg-color-dark-purple rounded-xl w-[30%] min-h-[480px] min-w-[450px] pt-[15px] ' +
+        'bg-color-dark-purple rounded-xl w-[30%] min-h-[480px] min-w-[450px] pt-[15px] max-w-[450px] ' +
         props.classes
       }
     >

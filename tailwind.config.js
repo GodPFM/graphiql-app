@@ -17,6 +17,8 @@ module.exports = {
         'color-dark-purple': '#1B2240',
         'color-bright-black': '#333333',
         'color-dark-blue': '#566992',
+        'color-border-dark-purple': '#361e9a',
+        'color-hover-button-purple': '#311C87',
         'color-dark-blue-hover': '#003D5B',
         'color-light-gray': '#f3f4f6',
         'color-text-bright-red': '#ff6b98',
