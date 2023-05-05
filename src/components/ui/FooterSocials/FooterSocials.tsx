@@ -1,5 +1,5 @@
 import React from 'react';
-import { ITeamData } from '../../Footer/Footer';
+import { ITeamData } from '@/components/Footer/Footer';
 import github_icon from '@/assets/images/github-icon.svg';
 import Image from 'next/image';
 

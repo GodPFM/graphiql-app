@@ -1,10 +1,15 @@
 import type { PreloadedState } from '@reduxjs/toolkit';
 import * as toolkitRaw from '@reduxjs/toolkit';
-// @ts-ignore
-const { combineReducers, configureStore } = ((toolkitRaw as never).default ??
+
+import documentReducer from './reducers/document/slice';
+
+type TypeToolkitRaw = typeof toolkitRaw & { default?: unknown };
+const { combineReducers, configureStore } = ((toolkitRaw as TypeToolkitRaw).default ??
   toolkitRaw) as typeof toolkitRaw;
 
-const rootReducer = combineReducers({});
+const rootReducer = combineReducers({
+  document: documentReducer,
+});
 
 export const setupStore = (preloadedState?: PreloadedState<RootState>) => {
   return configureStore({
