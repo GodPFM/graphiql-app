@@ -3,6 +3,8 @@ import { ParticlesBackground } from '@/components/ui/ParticlesBackground/Particl
 import { MainCodeBlock } from '@/components/Main/MainCodeBlock/MainCodeBlock';
 import { MainCodeRequest } from '@/components/Main/MainCodeRequest/MainCodeRequest';
 import { MainCodeResponce } from '@/components/Main/MainCodeResponce/MainCodeResponce';
+import { MainAuthBlock } from '@/components/Main/MainAuthBlock/MainAuthBlock';
+import GraphLogoBlock from '@/components/GraphLogoBlock/GraphLogoBlock';
 
 const Home = () => {
   const request = {
@@ -27,7 +29,9 @@ const Home = () => {
         />
         <MainCodeBlock classes={'min-[1470px]:block hidden'} items={[request]} />
         <MainCodeBlock classes={'min-[1470px]:block hidden'} items={[responce]} />
-        <MainCodeBlock items={[request]} />
+        <GraphLogoBlock>
+          <MainAuthBlock />
+        </GraphLogoBlock>
       </div>
     </div>
   );
