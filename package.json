@@ -11,7 +11,8 @@
     "lint": "yarn lint:format && yarn lint:fix ",
     "prepare": "husky install",
     "test": "vitest --ui",
-    "coverage": "vitest run --coverage"
+    "coverage": "vitest run --coverage",
+    "generate": "graphql-codegen --config codegen.yml"
   },
   "dependencies": {
     "@emotion/react": "^11.10.8",
@@ -49,6 +50,8 @@
   },
   "devDependencies": {
     "@testing-library/react": "^14.0.0",
+    "@graphql-codegen/cli": "^3.3.1",
+    "@graphql-codegen/typescript": "^3.0.4",
     "@types/react": "18.2.0",
     "@types/react-dom": "18.2.1",
     "@typescript-eslint/eslint-plugin": "^5.55.0",
