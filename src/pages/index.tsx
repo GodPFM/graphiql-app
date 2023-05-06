@@ -11,7 +11,7 @@ const Home = () => {
     header: 'Ask for what you want',
     codeBlock: <MainCodeRequest />,
   };
-  const responce = {
+  const response = {
     header: 'Get predictable results',
     codeBlock: <MainCodeResponce />,
   };
@@ -25,10 +25,10 @@ const Home = () => {
       >
         <MainCodeBlock
           classes={'min-[1470px]:hidden max-[999px]:hidden'}
-          items={[request, responce]}
+          items={[request, response]}
         />
         <MainCodeBlock classes={'min-[1470px]:block hidden'} items={[request]} />
-        <MainCodeBlock classes={'min-[1470px]:block hidden'} items={[responce]} />
+        <MainCodeBlock classes={'min-[1470px]:block hidden'} items={[response]} />
         <GraphLogoBlock>
           <MainAuthBlock />
         </GraphLogoBlock>

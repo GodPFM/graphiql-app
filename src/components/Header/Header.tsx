@@ -8,7 +8,7 @@ const Header = () => {
   return (
     <header className="h-12 flex justify-between items-center bg-color-dark-purple pl-[2%] pr-[2%] z-10">
       <div className="h-full w-16 flex justify-center items-center border-r-color-dark-grey border-r-[1px]">
-        <Image className="m-0" src={logo} alt={'logo'} />
+        <Image className="m-0" width={33} height={35} src={logo} alt={'logo'} />
       </div>
       <HeaderMenu isBurger={false} classes={'hidden sm:flex'} />
       <HeaderBurger />
