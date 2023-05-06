@@ -2,10 +2,7 @@ import Form from '@/components/Form.tsx/Form';
 import React from 'react';
 
 const Home = () => (
-  <>
-    <p>Home page</p>
-    <Form />
-  </>
+  <div className={'bg-gradient-to-br from-[#7c22ce] via-60% via-[#3c1a98] to-[#00197c]'}></div>
 );
 
 export default Home;
