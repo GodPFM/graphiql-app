@@ -10,6 +10,7 @@ const baseUrl = 'https://api.escuelajs.co/graphql';
 
 export const graphQl = createApi({
   reducerPath: 'getData',
+  tagTypes: ['Data'],
   baseQuery: fetchBaseQuery({
     baseUrl,
   }),
@@ -28,6 +29,7 @@ export const graphQl = createApi({
         },
         body,
       }),
+      invalidatesTags: [{ type: 'Data', id: 'LIST' }],
     }),
   }),
 });

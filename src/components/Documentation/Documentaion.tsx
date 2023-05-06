@@ -1,13 +1,13 @@
-import { Typography } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import SchemaNaviagation from './SchemaNavigation/SchemaNaviagation';
 import BackButton from './BackButton/BackButton';
 import Arguments from './Arguments/Arguments';
 import Fields from './Fields/Fields';
 import { useGetDataMutaion } from '../../store/api';
-import { useEffect } from 'react';
 
 const Documentaion = () => {
-  const QUERY = `{
+  const QUERY = {
+    query: `{
     __schema {
       queryType {
         fields {
@@ -15,16 +15,15 @@ const Documentaion = () => {
         }
       }
     }
-  }`;
-  const [getData] = useGetDataMutaion();
-  let res = {};
-  useEffect(() => {
-    res = getData({ query: QUERY });
-  }, []);
+  }`,
+  };
 
-  useEffect(() => {
-    console.log(res);
-  }, [res]);
+  const [getData, { data }] = useGetDataMutaion();
+  1;
+
+  const handleClick = () => {
+    getData(QUERY);
+  };
 
   return (
     <>
@@ -43,6 +42,10 @@ const Documentaion = () => {
       <BackButton />
       <Arguments />
       <Fields />
+      <Button onClick={handleClick}>Загрузить</Button>
+      <pre className="break-all whitespace-pre-wrap">
+        {data ? JSON.stringify(data, null, '  ') : 'data template'}
+      </pre>
     </>
   );
 };
