@@ -3,8 +3,29 @@ import SchemaNaviagation from './SchemaNavigation/SchemaNaviagation';
 import BackButton from './BackButton/BackButton';
 import Arguments from './Arguments/Arguments';
 import Fields from './Fields/Fields';
+import { useGetDataMutaion } from '../../store/api';
+import { useEffect } from 'react';
 
 const Documentaion = () => {
+  const QUERY = `{
+    __schema {
+      queryType {
+        fields {
+          name
+        }
+      }
+    }
+  }`;
+  const [getData] = useGetDataMutaion();
+  let res = {};
+  useEffect(() => {
+    res = getData({ query: QUERY });
+  }, []);
+
+  useEffect(() => {
+    console.log(res);
+  }, [res]);
+
   return (
     <>
       <Typography

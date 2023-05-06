@@ -1,7 +1,9 @@
-import type { PreloadedState } from '@reduxjs/toolkit';
 import * as toolkitRaw from '@reduxjs/toolkit';
+import { createWrapper } from 'next-redux-wrapper';
 
+import { graphQl } from './api';
 import documentReducer from './reducers/document/slice';
+import editorReducer from './reducers/editor/slice';
 
 type TypeToolkitRaw = typeof toolkitRaw & { default?: unknown };
 const { combineReducers, configureStore } = ((toolkitRaw as TypeToolkitRaw).default ??
@@ -9,15 +11,19 @@ const { combineReducers, configureStore } = ((toolkitRaw as TypeToolkitRaw).defa
 
 const rootReducer = combineReducers({
   document: documentReducer,
+  editor: editorReducer,
+  [graphQl.reducerPath]: graphQl.reducer,
 });
 
-export const setupStore = (preloadedState?: PreloadedState<RootState>) => {
+const makeStore = () => {
   return configureStore({
     reducer: rootReducer,
-    preloadedState,
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(graphQl.middleware),
   });
 };
 
 export type RootState = ReturnType<typeof rootReducer>;
-export type AppStore = ReturnType<typeof setupStore>;
+export type AppStore = ReturnType<typeof makeStore>;
 export type AppDispatch = AppStore['dispatch'];
+
+export const wrapper = createWrapper<AppStore>(makeStore, { debug: true });

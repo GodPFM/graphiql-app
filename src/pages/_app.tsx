@@ -4,14 +4,17 @@ import { Provider } from 'react-redux';
 import type { AppProps } from 'next/app';
 
 import Layout from '../components/Layout/Layout';
-import { setupStore } from '@/store/store';
+import { wrapper } from '../store/store';
 
-export default function App({ Component, pageProps }: AppProps) {
+export function App({ Component, pageProps }: AppProps) {
+  const { store, props } = wrapper.useWrappedStore(pageProps);
   return (
-    <Provider store={setupStore()}>
+    <Provider store={store}>
       <Layout>
-        <Component {...pageProps} />
+        <Component {...props.pageProps} />
       </Layout>
     </Provider>
   );
 }
+
+export default App;
