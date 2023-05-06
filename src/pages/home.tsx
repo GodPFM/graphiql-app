@@ -1,4 +1,3 @@
-import Form from '@/components/Form.tsx/Form';
 import React from 'react';
 
 const Home = () => (
