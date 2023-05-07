@@ -9,7 +9,7 @@ interface IProps {
 
 const FooterSocials: React.FC<IProps> = ({ data }) => {
   return (
-    <ul className="flex w-full h-full flex-col row-start-1 row-end-3 md:flex-row md:row-start-auto md:row-end-auto mb-0 mt-0">
+    <ul className="flex w-full h-[97%] flex-col row-start-1 row-end-3 md:flex-row md:row-start-auto md:row-end-auto mb-0 mt-0">
       {data.map(({ name, github }) => {
         return (
           <li
