@@ -15,7 +15,7 @@ const rootReducer = combineReducers({
   [graphQl.reducerPath]: graphQl.reducer,
 });
 
-const makeStore = () => {
+export const makeStore = () => {
   return configureStore({
     reducer: rootReducer,
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(graphQl.middleware),
