@@ -8,6 +8,10 @@ import passwordIcon from '@/assets/images/password-icon.svg';
 import mailIcon from '@/assets/images/mail-icon.svg';
 import Link from 'next/link';
 import { SubmitHandler, useForm, FormProvider } from 'react-hook-form';
+import { FormAuthType } from '@/types/types';
+import { authActions } from '@/store/reducers/auth/authSlice';
+import { useAppDispatch } from '@/store/hooks';
+import { KindForm } from '@/types/enums';
 
 const validationSchem = yup.object({
   email: yup.string().email('Enter a valid email').required('Email is required'),
@@ -26,14 +30,12 @@ const validationSchem = yup.object({
     .oneOf([yup.ref('password'), undefined], 'Password must much')
     .required('Repeat password'),
 });
+type Props = {
+  onSubmit: (data: FormAuthType) => void;
+};
 
-interface FormType {
-  email: string;
-  password: string;
-  confirmPassword: string;
-}
-const FormSignin = () => {
-  const methods = useForm<FormType>({
+const FormSignin = ({ onSubmit }: Props) => {
+  const methods = useForm<FormAuthType>({
     mode: 'all',
     resolver: yupResolver(validationSchem),
     defaultValues: {
@@ -42,8 +44,14 @@ const FormSignin = () => {
       confirmPassword: '',
     },
   });
-  const formSubmit: SubmitHandler<FormType> = (data: FormType) => {
-    console.log({ data: data });
+  const dispatch = useAppDispatch();
+  const hadleChangeType = () => {
+    dispatch(authActions.changeKindOfForm(KindForm.login));
+  };
+
+  const formSubmit: SubmitHandler<FormAuthType> = (data: FormAuthType) => {
+    onSubmit(data);
+    methods.reset();
   };
 
   return (
@@ -53,7 +61,13 @@ const FormSignin = () => {
           <div className="flex justify-between items-center">
             <h2 className="font-semibold text-xl">Sign in</h2>
             <p className="text-xs">
-              Already have an account?<Link href="/">Let&apos;s log in</Link>
+              Already have an account?{' '}
+              <span
+                onClick={hadleChangeType}
+                className="cursor-pointer text-color-purple hover:underline decoration-1"
+              >
+                Let&apos;s log in
+              </span>
             </p>
           </div>
 
