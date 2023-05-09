@@ -1,4 +1,4 @@
-import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { useAppDispatch } from '@/store/hooks';
 import { authActions } from '@/store/reducers/auth/authSlice';
 import { KindForm } from '@/types/enums';
 import Button from '@mui/material/Button';
@@ -6,7 +6,6 @@ import { useRouter } from 'next/router';
 import React from 'react';
 
 export const MainAuthBlock = () => {
-  const { kindOfForm, id } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
   const router = useRouter();
   const handleClick = (

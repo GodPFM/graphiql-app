@@ -1,6 +1,5 @@
 import { KindForm } from '@/types/enums';
 import { createSlice } from '@reduxjs/toolkit';
-import { User } from 'firebase/auth';
 
 interface Auth {
   id: string | null;
