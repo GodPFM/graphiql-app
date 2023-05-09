@@ -4,18 +4,11 @@ import BackButton from './BackButton/BackButton';
 import Arguments from './Arguments/Arguments';
 import Fields from './Fields/Fields';
 import { useGetDataMutaion } from '../../store/api';
+import { ROOT_QUERY } from '@/queries/introspectionQuery';
 
 const Documentaion = () => {
   const QUERY = {
-    query: `{
-    __schema {
-      queryType {
-        fields {
-          name
-        }
-      }
-    }
-  }`,
+    query: ROOT_QUERY,
   };
 
   const [getData, { data }] = useGetDataMutaion();

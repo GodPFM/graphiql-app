@@ -13,16 +13,21 @@ const SchemaNaviagation = () => {
       direction="row"
       spacing={1}
       alignItems={'center'}
-      className="my-4 text-[14px] text-color-documentation-secondary"
+      className="my-4 text-[14px] text-color-documentation-secondary "
     >
       {nav.map((item, index) => {
         return index ? (
           <React.Fragment key={index}>
             <Divider />
-            <button className="hover:underline">{item}</button>
+            <button className="hover:underline bg-transparent border-0 font-SourceSansPro">
+              {item}
+            </button>
           </React.Fragment>
         ) : (
-          <button key={index} className="hover:underline">
+          <button
+            key={index}
+            className="hover:underline bg-transparent border-0 font-SourceSansPro"
+          >
             {item}
           </button>
         );

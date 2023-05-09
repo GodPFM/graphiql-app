@@ -13,17 +13,17 @@ const Fields = () => {
         >
           Fields
         </Typography>
-        <button className="w-6 h-6 ml-5 flex items-center justify-center hover:bg-white duration-300 rounded group">
+        <button className="w-6 h-6 ml-5 flex items-center justify-center hover:bg-white duration-300 rounded group bg-transparent border-0">
           <AddCircleOutlineIcon className="w-5 h-5 stroke-1 fill-color-documentation-secondary group-hover:fill-color-documentation-primary" />
         </button>
       </Stack>
 
       <Stack>
         <Stack direction="row" alignItems="center">
-          <button className="w-6 h-6 mr-2 my-1 flex items-center justify-center hover:bg-white duration-300 rounded group">
+          <button className="w-6 h-6 mr-2 my-1 flex items-center justify-center hover:bg-white duration-300 rounded group bg-transparent border-0">
             <AddCircleOutlineIcon className="w-5 h-5 stroke-1 fill-color-documentation-secondary group-hover:fill-color-documentation-primary" />
           </button>
-          <button className="flex items-center hover:bg-white rounded group px-3 w-full">
+          <button className="flex items-center hover:bg-white rounded group px-3 w-full bg-transparent border-0">
             <Typography fontFamily={'Source Code Pro'} className="text-[14px]">
               example:
             </Typography>
@@ -38,10 +38,10 @@ const Fields = () => {
         </Stack>
 
         <Stack direction="row" alignItems="center">
-          <button className="w-6 h-6 mr-2 my-1 flex items-center justify-center hover:bg-white duration-300 rounded group">
+          <button className="w-6 h-6 mr-2 my-1 flex items-center justify-center hover:bg-white duration-300 rounded group bg-transparent border-0">
             <AddCircleOutlineIcon className="w-5 h-5 stroke-1 fill-color-documentation-secondary group-hover:fill-color-documentation-primary" />
           </button>
-          <button className="flex items-center hover:bg-white rounded group px-3 w-full">
+          <button className="flex items-center hover:bg-white rounded group px-3 w-full bg-transparent border-0">
             <Typography fontFamily={'Source Code Pro'} className="text-[14px]">
               example:
             </Typography>
@@ -56,10 +56,10 @@ const Fields = () => {
         </Stack>
 
         <Stack direction="row" alignItems="center">
-          <button className="w-6 h-6 mr-2 my-1 flex items-center justify-center hover:bg-white duration-300 rounded group">
+          <button className="w-6 h-6 mr-2 my-1 flex items-center justify-center hover:bg-white duration-300 rounded group bg-transparent border-0">
             <AddCircleOutlineIcon className="w-5 h-5 stroke-1 fill-color-documentation-secondary group-hover:fill-color-documentation-primary" />
           </button>
-          <button className="flex items-center hover:bg-white rounded group px-3 w-full">
+          <button className="flex items-center hover:bg-white rounded group px-3 w-full bg-transparent border-0">
             <Typography fontFamily={'Source Code Pro'} className="text-[14px]">
               example:
             </Typography>

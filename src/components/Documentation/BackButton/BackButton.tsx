@@ -13,7 +13,7 @@ const BackButton = () => {
 
   return (
     <Stack direction="row" className="flex items-center text-base font-semibold">
-      <button className="w-6 h-6 flex items-center justify-center mr-3 hover:bg-white duration-300 rounded group">
+      <button className="w-6 h-6 flex items-center justify-center mr-3 hover:bg-white duration-300 rounded group bg-transparent border-0">
         <ArrowBackIcon className="w-5 h-5 fill-color-documentation-secondary group-hover:fill-color-documentation-primary" />
       </button>
       <Stack direction="row" className="flex">
@@ -27,7 +27,7 @@ const BackButton = () => {
         </Typography>
       </Stack>
       {/* смотреть в стейте отмечено или нет и подставлять нужную иконку */}
-      <button className="w-6 h-6 ml-3 flex items-center justify-center mr-2 hover:bg-white duration-300 rounded group">
+      <button className="w-6 h-6 ml-3 flex items-center justify-center mr-2 hover:bg-white duration-300 rounded group bg-transparent border-0">
         <AddCircleOutlineIcon className="w-5 h-5 stroke-1 fill-color-documentation-secondary group-hover:fill-color-documentation-primary" />
       </button>
     </Stack>
