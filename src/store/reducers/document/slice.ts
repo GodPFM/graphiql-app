@@ -6,6 +6,12 @@ interface InitialState {
   nav: string[];
   schema: object;
 }
+
+interface ActionHydrate {
+  payload: RootState;
+  type: string;
+}
+
 const initialState: InitialState = {
   nav: ['Root', 'Query'],
   schema: {},
@@ -22,20 +28,20 @@ export const documentSlice = createSlice({
       state.schema = action.payload;
     },
   },
-  extraReducers: {
-    [HYDRATE]: (state, action) => {
-      console.log('HYDRATE', action.payload);
+  extraReducers: (builder) => {
+    builder.addCase(HYDRATE, (state, action) => {
+      console.log('HYDRATE', (action as ActionHydrate).payload);
 
-      if (action.payload.document.nav) {
-        state.nav = action.payload.document.nav;
+      if ((action as ActionHydrate).payload.document.nav) {
+        state.nav = (action as ActionHydrate).payload.document.nav;
       }
 
-      if (action.payload.document.schema) {
-        state.schema = action.payload.document.schema;
+      if ((action as ActionHydrate).payload.document.schema) {
+        state.schema = (action as ActionHydrate).payload.document.schema;
       }
 
       return state;
-    },
+    });
   },
 });
 
