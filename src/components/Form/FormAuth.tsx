@@ -22,6 +22,8 @@ const FormAuth = () => {
           const errorCode = error.code;
           const errorMessage = error.message;
           console.error(errorCode, errorMessage);
+
+          alert('no such user');
         });
     }
     if (kindOfForm === KindForm.signin) {
