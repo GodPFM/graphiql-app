@@ -1,6 +1,6 @@
 import { INPUT_VALUE, TYPE_REF } from '@/queries/fragments';
 
-export const getRootQuery = (operationType?: string) => {
+export const getRootListQuery = (operationType?: string) => {
   switch (operationType) {
     case 'query':
       return getRootList(operationType);

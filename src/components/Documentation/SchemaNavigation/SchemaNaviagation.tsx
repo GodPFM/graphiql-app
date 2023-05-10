@@ -1,9 +1,10 @@
+import React from 'react';
 import { Stack } from '@mui/material';
 import { useSelector } from 'react-redux';
 
 import { selectDocument } from '@/store/reducers/document/slice';
 import Divider from './Divider';
-import React from 'react';
+import { capitalize } from '@/utils/textFotmatter';
 
 const SchemaNaviagation = () => {
   const { nav } = useSelector(selectDocument);
@@ -20,7 +21,7 @@ const SchemaNaviagation = () => {
           <React.Fragment key={index}>
             <Divider />
             <button className="hover:underline bg-transparent border-0 font-SourceSansPro">
-              {item}
+              {capitalize(item)}
             </button>
           </React.Fragment>
         ) : (
@@ -28,7 +29,7 @@ const SchemaNaviagation = () => {
             key={index}
             className="hover:underline bg-transparent border-0 font-SourceSansPro"
           >
-            {item}
+            {capitalize(item)}
           </button>
         );
       })}

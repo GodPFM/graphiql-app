@@ -1,32 +1,29 @@
-import { MouseEvent, useEffect } from 'react';
+import { MouseEvent } from 'react';
 import { Typography, Stack } from '@mui/material';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
-import { useAppSelector } from '@/store/hooks';
-import { selectDocument } from '@/store/reducers/document/slice';
-import { getRootQuery } from '@/queries/getRootQuery';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { selectDocument, addItem, setRoot } from '@/store/reducers/document/slice';
+
 import { useGetDataMutaion } from '@/store/api';
+import { getRootListQuery } from '@/queries/getRootQuery';
 
 const Root = () => {
-  const [getData, { data, isSuccess }] = useGetDataMutaion();
   const { schema } = useAppSelector(selectDocument);
-  let rootQuery = '';
+  const dispatch = useAppDispatch();
+
+  const [getData] = useGetDataMutaion();
 
   const handleClick = (e: MouseEvent<HTMLElement>) => {
     if (!(e.target instanceof HTMLElement)) return;
-    const elem = e.target.closest('button');
-    rootQuery = getRootQuery(elem?.innerText.split(':')[0]);
+    const elemText = (e.target.closest('button') as HTMLButtonElement).innerText.split(':')[0];
+    dispatch(addItem(elemText));
+    dispatch(setRoot(false));
     getData({
-      query: rootQuery,
+      query: getRootListQuery(elemText),
     });
   };
-
-  useEffect(() => {
-    if (isSuccess) {
-      console.log(data);
-    }
-  }, [data]);
 
   return (
     <>

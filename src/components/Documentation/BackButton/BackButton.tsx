@@ -5,6 +5,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 import { selectDocument } from '@/store/reducers/document/slice';
+import { capitalize } from '@/utils/textFotmatter';
 
 const BackButton = () => {
   const { nav } = useSelector(selectDocument);
@@ -18,12 +19,12 @@ const BackButton = () => {
       </button>
       <Stack direction="row" className="flex">
         <Typography className="text-color-documentation-primary font-semibold">
-          {nav[nav.length - 1]}:
+          {capitalize(nav[nav.length - 1])}:
         </Typography>
         {/* в оразце, если название поля не совпадает с названием типа то название типа в квадратных скобках*/}
         {/* если это query mutation subscr - то не выводим тип */}
         <Typography className="text-color-documentation-secondary  font-semibold ml-1">
-          [{nav[nav.length - 1]}]
+          [{capitalize(nav[nav.length - 1])}]
         </Typography>
       </Stack>
       {/* смотреть в стейте отмечено или нет и подставлять нужную иконку */}

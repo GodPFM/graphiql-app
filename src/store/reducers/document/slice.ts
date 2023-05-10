@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { RootState } from '../../store';
+import { RootState } from '@/store/store';
 import { HYDRATE } from 'next-redux-wrapper';
-import { Schema } from '../../../types/schema-types';
+import { Schema } from '@/types/schema-types';
 
 interface ActionHydrate {
   payload: RootState;
@@ -16,12 +16,16 @@ interface InitialState {
   nav: string[];
   schema: Data | null;
   isRoot: boolean;
+  fields: object[];
+  args: object[];
 }
 
 const initialState: InitialState = {
-  nav: ['Root'],
+  nav: ['root'],
   isRoot: true,
   schema: null,
+  fields: [],
+  args: [],
 };
 
 export const documentSlice = createSlice({
@@ -36,6 +40,12 @@ export const documentSlice = createSlice({
     },
     setRoot: (state, action: PayloadAction<boolean>) => {
       state.isRoot = action.payload;
+    },
+    setFields: (state, action: PayloadAction<object[]>) => {
+      state.fields = action.payload;
+    },
+    setArgs: (state, action: PayloadAction<object[]>) => {
+      state.args = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -57,6 +67,6 @@ export const documentSlice = createSlice({
 
 export const selectDocument = (state: RootState) => state.document;
 
-export const { addItem, addSchema } = documentSlice.actions;
+export const { addItem, addSchema, setRoot, setFields, setArgs } = documentSlice.actions;
 
 export default documentSlice.reducer;
