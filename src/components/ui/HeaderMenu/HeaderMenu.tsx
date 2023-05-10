@@ -6,6 +6,8 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { KindForm } from '@/types/enums';
 import { authActions } from '@/store/reducers/auth/authSlice';
 import { useRouter } from 'next/router';
+import { signOut } from 'firebase/auth';
+import { firebaseAuth } from 'firebase.config';
 interface IProps {
   isBurger: boolean;
   classes: string;
@@ -28,6 +30,7 @@ const HeaderMenu = (props: IProps) => {
 
           break;
         case 'logout':
+          signOut(firebaseAuth);
           dispatch(authActions.changeKindOfForm(KindForm.login));
           dispatch(authActions.removeUser());
           router.push('/');
