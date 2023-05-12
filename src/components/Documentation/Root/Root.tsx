@@ -15,6 +15,7 @@ import {
 
 import { useGetDataMutation } from '@/store/api';
 import { getRootListQuery } from '@/queries/getRootQuery';
+import { DocumentSkeleton } from '@/components/Documentation/Skeleton/Skeleton';
 
 const Root = () => {
   const { schema } = useAppSelector(selectDocument);
@@ -58,7 +59,7 @@ const Root = () => {
   }, [data]);
 
   return isLoading ? (
-    <div>loading...</div>
+    <DocumentSkeleton />
   ) : (
     <>
       <Stack direction="row" className="mb-2 mt-4">

@@ -12,12 +12,29 @@ type Data = {
   data: Schema;
 };
 
+interface Fields {
+  name: string;
+  args: Args;
+  type: OfType;
+}
+
+interface Args {
+  name: string;
+  defaultValue: null;
+}
+
+interface OfType {
+  ofType: OfType;
+  name: null | string;
+  kind: string;
+}
+
 interface InitialState {
   nav: string[];
   schema: Data | null;
   isRoot: boolean;
-  fields: object[];
-  args: object[];
+  fields: Fields[];
+  args: Args[];
 }
 
 const initialState: InitialState = {
@@ -41,10 +58,13 @@ export const documentSlice = createSlice({
     setRoot: (state, action: PayloadAction<boolean>) => {
       state.isRoot = action.payload;
     },
-    setFields: (state, action: PayloadAction<object[]>) => {
+    resetRoot: (state) => {
+      state.nav = ['root'];
+    },
+    setFields: (state, action: PayloadAction<Fields[]>) => {
       state.fields = action.payload;
     },
-    setArgs: (state, action: PayloadAction<object[]>) => {
+    setArgs: (state, action: PayloadAction<Args[]>) => {
       state.args = action.payload;
     },
   },
@@ -67,6 +87,6 @@ export const documentSlice = createSlice({
 
 export const selectDocument = (state: RootState) => state.document;
 
-export const { addItem, addSchema, setRoot, setFields, setArgs } = documentSlice.actions;
+export const { addItem, addSchema, setRoot, setFields, setArgs, resetRoot } = documentSlice.actions;
 
 export default documentSlice.reducer;
