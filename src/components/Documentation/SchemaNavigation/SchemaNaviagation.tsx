@@ -32,14 +32,14 @@ const SchemaNaviagation = () => {
       direction="row"
       spacing={1}
       alignItems={'center'}
-      className="my-4 text-[14px] text-color-documentation-secondary "
+      className="my-4 text-[14px] text-color-documentation-secondary flex-wrap"
     >
       {nav.map((item, index) => {
         return index ? (
           <React.Fragment key={index}>
             <Divider />
-            <button className="hover:underline bg-transparent border-0 font-SourceSansPro">
-              {capitalize(item)}
+            <button className="bg-transparent border-0 font-SourceSansPro">
+              {item.name === 'root' ? capitalize(item.name) : item.name}
             </button>
           </React.Fragment>
         ) : (
@@ -48,7 +48,7 @@ const SchemaNaviagation = () => {
             onClick={handleRoot}
             className="hover:underline bg-transparent border-0 font-SourceSansPro"
           >
-            {capitalize(item)}
+            {item.name === 'root' ? capitalize(item.name) : item.name}
           </button>
         );
       })}

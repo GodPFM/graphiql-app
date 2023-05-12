@@ -31,3 +31,10 @@ export interface OfType {
   name: null | string;
   kind: string;
 }
+
+export interface NavObj {
+  name: string;
+  prevArgs: Args[];
+  prevFields: Fields[];
+  prevSchema: Data | null;
+}

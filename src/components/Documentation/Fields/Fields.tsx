@@ -13,7 +13,7 @@ import {
 } from '@/store/reducers/document/slice';
 import { useGetDataMutation } from '@/store/api';
 import { getTypeFields } from '@/queries/getTypeFields';
-import { OfType } from '@/types/schema-types';
+import { OfType, NavObj } from '@/types/schema-types';
 import { DocumentSkeleton } from '../Skeleton/Skeleton';
 
 function getType(node: OfType): string {
@@ -21,14 +21,20 @@ function getType(node: OfType): string {
 }
 
 const Fields = () => {
-  const { fields } = useAppSelector(selectDocument);
+  const { fields, args, schema } = useAppSelector(selectDocument);
   const dispatch = useAppDispatch();
   const [getData, { data, isSuccess, isLoading }] = useGetDataMutation();
 
   const handleField = (index: number) => {
+    const navObj: NavObj = {
+      name: fields[index].name,
+      prevSchema: schema,
+      prevFields: fields,
+      prevArgs: args,
+    };
+    dispatch(addNavItem(navObj));
     dispatch(setArgs(fields[index].args));
     dispatch(setFields([]));
-    dispatch(addNavItem(fields[index].name));
   };
 
   const handleType = (index: number) => {
@@ -45,17 +51,21 @@ const Fields = () => {
     ) {
       return;
     } else {
+      const navObj: NavObj = {
+        name: currentType,
+        prevSchema: schema,
+        prevFields: fields,
+        prevArgs: args,
+      };
       getData({
         query: getTypeFields(currentType),
       });
-      console.log(currentType);
-      dispatch(addNavItem(currentType));
+      dispatch(addNavItem(navObj));
     }
   };
 
   useEffect(() => {
     if (isSuccess && data.data.__type.fields !== null) {
-      console.log(data);
       dispatch(addSchema(data));
       dispatch(setFields(data.data.__type.fields));
       dispatch(setArgs([]));

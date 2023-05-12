@@ -16,9 +16,10 @@ import {
 import { useGetDataMutation } from '@/store/api';
 import { getRootListQuery } from '@/queries/getRootQuery';
 import { DocumentSkeleton } from '@/components/Documentation/Skeleton/Skeleton';
+import { NavObj } from '@/types/schema-types';
 
 const Root = () => {
-  const { schema } = useAppSelector(selectDocument);
+  const { schema, fields, args } = useAppSelector(selectDocument);
   const dispatch = useAppDispatch();
   const [elemText, setElemText] = useState('');
 
@@ -37,7 +38,13 @@ const Root = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      dispatch(addNavItem(elemText));
+      const navObj: NavObj = {
+        name: elemText,
+        prevSchema: schema,
+        prevFields: fields,
+        prevArgs: args,
+      };
+      dispatch(addNavItem(navObj));
 
       if (elemText === 'query') {
         dispatch(addSchema(data));

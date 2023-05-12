@@ -1,10 +1,10 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '@/store/store';
 import { HYDRATE } from 'next-redux-wrapper';
-import { ActionHydrate, Data, Fields, Args } from '@/types/schema-types';
+import { ActionHydrate, Data, Fields, Args, NavObj } from '@/types/schema-types';
 
 interface InitialState {
-  nav: string[];
+  nav: NavObj[];
   schema: Data | null;
   isRoot: boolean;
   fields: Fields[];
@@ -12,7 +12,14 @@ interface InitialState {
 }
 
 const initialState: InitialState = {
-  nav: ['root'],
+  nav: [
+    {
+      name: 'root',
+      prevSchema: null,
+      prevFields: [],
+      prevArgs: [],
+    },
+  ],
   isRoot: true,
   schema: null,
   fields: [],
@@ -23,8 +30,11 @@ export const documentSlice = createSlice({
   name: 'document',
   initialState,
   reducers: {
-    addNavItem: (state, action: PayloadAction<string>) => {
+    addNavItem: (state, action: PayloadAction<NavObj>) => {
       state.nav.push(action.payload);
+    },
+    deleteNavItem: (state) => {
+      state.nav.pop();
     },
     addSchema: (state, action: PayloadAction<Data>) => {
       state.schema = action.payload;
@@ -33,7 +43,14 @@ export const documentSlice = createSlice({
       state.isRoot = action.payload;
     },
     resetRoot: (state) => {
-      state.nav = ['root'];
+      state.nav = [
+        {
+          name: 'root',
+          prevSchema: null,
+          prevFields: [],
+          prevArgs: [],
+        },
+      ];
     },
     setFields: (state, action: PayloadAction<Fields[]>) => {
       state.fields = action.payload;
@@ -44,8 +61,6 @@ export const documentSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(HYDRATE, (state, action) => {
-      console.log('HYDRATE', (action as ActionHydrate).payload);
-
       if ((action as ActionHydrate).payload.document.nav) {
         state.nav = (action as ActionHydrate).payload.document.nav;
       }
@@ -61,7 +76,7 @@ export const documentSlice = createSlice({
 
 export const selectDocument = (state: RootState) => state.document;
 
-export const { addNavItem, addSchema, setRoot, setFields, setArgs, resetRoot } =
+export const { addNavItem, addSchema, setRoot, setFields, setArgs, resetRoot, deleteNavItem } =
   documentSlice.actions;
 
 export default documentSlice.reducer;

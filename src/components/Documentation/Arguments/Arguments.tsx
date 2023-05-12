@@ -41,13 +41,11 @@ const Arguments = () => {
 
   useEffect(() => {
     if (isSuccess && data.data.__type.inputFields !== null) {
-      console.log(data);
       dispatch(addSchema(data));
       dispatch(setFields(data.data.__type.inputFields));
       dispatch(setArgs([]));
     }
   }, [data]);
-  console.log(args);
 
   return args === undefined || !args.length ? null : (
     <>
