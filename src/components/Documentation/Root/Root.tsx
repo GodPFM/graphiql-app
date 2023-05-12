@@ -19,7 +19,7 @@ import { DocumentSkeleton } from '@/components/Documentation/Skeleton/Skeleton';
 import { NavObj } from '@/types/schema-types';
 
 const Root = () => {
-  const { schema, fields, args } = useAppSelector(selectDocument);
+  const { schema, args } = useAppSelector(selectDocument);
   const dispatch = useAppDispatch();
   const [elemText, setElemText] = useState('');
 
@@ -38,28 +38,41 @@ const Root = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      const navObj: NavObj = {
-        name: elemText,
-        prevSchema: schema,
-        prevFields: fields,
-        prevArgs: args,
-      };
-      dispatch(addNavItem(navObj));
-
       if (elemText === 'query') {
         dispatch(addSchema(data));
         dispatch(setFields(data.data.__schema.queryType.fields));
         dispatch(setArgs([]));
+        const navObj: NavObj = {
+          name: elemText,
+          prevSchema: data,
+          prevFields: data.data.__schema.queryType.fields,
+          prevArgs: args,
+        };
+        dispatch(addNavItem(navObj));
       }
       if (elemText === 'mutation') {
         dispatch(addSchema(data));
         dispatch(setFields(data.data.__schema.mutationType.fields));
         dispatch(setArgs([]));
+        const navObj: NavObj = {
+          name: elemText,
+          prevSchema: data,
+          prevFields: data.data.__schema.mutationType.fields,
+          prevArgs: args,
+        };
+        dispatch(addNavItem(navObj));
       }
       if (elemText === 'subscription') {
         console.log(data.data.__schema.subscriptionType);
         dispatch(setFields(data.data.__schema.subscriptionType.fields));
         dispatch(setArgs([]));
+        const navObj: NavObj = {
+          name: elemText,
+          prevSchema: data,
+          prevFields: data.data.__schema.subscriptionType.fields,
+          prevArgs: args,
+        };
+        dispatch(addNavItem(navObj));
       }
       dispatch(setRoot(false));
     }

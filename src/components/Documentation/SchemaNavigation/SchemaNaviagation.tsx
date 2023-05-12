@@ -28,7 +28,7 @@ const SchemaNaviagation = () => {
       });
     } else {
       dispatch(sliceNavItems(index));
-      const newData = nav[index + 1];
+      const newData = nav[index];
       dispatch(setArgs(newData.prevArgs));
       dispatch(setFields(newData.prevFields));
     }
