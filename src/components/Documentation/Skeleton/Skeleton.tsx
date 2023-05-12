@@ -4,8 +4,8 @@ import { Skeleton } from '@mui/material';
 export const DocumentSkeleton = () => {
   return (
     <>
-      {[...new Array(10)].map((_, index) => (
-        <Skeleton key={index} variant="rounded" width={210} height={20} className="mb-3" />
+      {[...new Array(7)].map((_, index) => (
+        <Skeleton key={index} variant="rounded" width={300} height={20} className="mt-3" />
       ))}
     </>
   );
