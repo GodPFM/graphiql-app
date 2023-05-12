@@ -29,7 +29,7 @@ const Root = () => {
 
     const newValue = (e.target.closest('button') as HTMLButtonElement).innerText.split(':')[0];
     setElemText(() => newValue);
-    console.log(schema);
+
     getData({
       query: getRootListQuery(newValue),
     }).unwrap();
@@ -38,7 +38,7 @@ const Root = () => {
   useEffect(() => {
     if (isSuccess) {
       dispatch(addItem(elemText));
-      // генерим нужные поля в стейт из даты
+
       if (elemText === 'query') {
         dispatch(addSchema(data));
         dispatch(setFields(data.data.__schema.queryType.fields));
