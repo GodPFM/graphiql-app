@@ -27,7 +27,9 @@ const Arguments = () => {
       currentType === 'String' ||
       currentType === 'Float' ||
       currentType === 'Boolean' ||
-      currentType === 'ID'
+      currentType === 'ID' ||
+      currentType === 'DateTime' ||
+      currentType === 'Role'
     ) {
       return;
     } else {
@@ -45,8 +47,9 @@ const Arguments = () => {
       dispatch(setArgs([]));
     }
   }, [data]);
+  console.log(args);
 
-  return !args.length ? null : (
+  return args === undefined || !args.length ? null : (
     <>
       {isLoading ? (
         <DocumentSkeleton />

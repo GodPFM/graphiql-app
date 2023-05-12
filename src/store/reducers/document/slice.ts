@@ -23,7 +23,7 @@ export const documentSlice = createSlice({
   name: 'document',
   initialState,
   reducers: {
-    addItem: (state, action: PayloadAction<string>) => {
+    addNavItem: (state, action: PayloadAction<string>) => {
       state.nav.push(action.payload);
     },
     addSchema: (state, action: PayloadAction<Data>) => {
@@ -61,6 +61,7 @@ export const documentSlice = createSlice({
 
 export const selectDocument = (state: RootState) => state.document;
 
-export const { addItem, addSchema, setRoot, setFields, setArgs, resetRoot } = documentSlice.actions;
+export const { addNavItem, addSchema, setRoot, setFields, setArgs, resetRoot } =
+  documentSlice.actions;
 
 export default documentSlice.reducer;

@@ -6,7 +6,7 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import {
   selectDocument,
-  addItem,
+  addNavItem,
   setRoot,
   setFields,
   setArgs,
@@ -37,7 +37,7 @@ const Root = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      dispatch(addItem(elemText));
+      dispatch(addNavItem(elemText));
 
       if (elemText === 'query') {
         dispatch(addSchema(data));
