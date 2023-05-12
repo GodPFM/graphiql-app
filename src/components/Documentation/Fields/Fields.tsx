@@ -5,12 +5,15 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 import { useAppSelector } from '@/store/hooks';
 import { selectDocument } from '@/store/reducers/document/slice';
-// import { useGetDataMutaion } from '@/store/api';
+// import { useGetDataMutation } from '@/store/api';
+// import { getRootListQuery } from '@/queries/getRootQuery';
 
 const Fields = () => {
   const { fields } = useAppSelector(selectDocument);
 
-  // const [_getData, { data, isSuccess }] = useGetDataMutaion();
+  // const [getData, { data, isSuccess }] = useGetDataMutation();
+  // const req = getRootListQuery(nav[nav.length - 1]);
+  // getData({ query: req });
 
   // useEffect(() => {
   //   if (isSuccess) {

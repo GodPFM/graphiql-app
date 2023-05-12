@@ -6,7 +6,7 @@ import Arguments from './Arguments/Arguments';
 import Fields from './Fields/Fields';
 import Root from './Root/Root';
 
-import { useGetDataMutaion } from '@/store/api';
+import { useGetDataMutation } from '@/store/api';
 import { useAppSelector } from '@/store/hooks';
 import { selectDocument } from '@/store/reducers/document/slice';
 
@@ -20,8 +20,7 @@ const Documentaion = () => {
     query: ROOT_QUERY,
   };
 
-  const [getData, { data }] = useGetDataMutaion();
-  1;
+  const [getData, { data }] = useGetDataMutation();
 
   const handleClick = () => {
     getData(QUERY);

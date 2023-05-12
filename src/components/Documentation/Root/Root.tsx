@@ -1,31 +1,65 @@
-import { MouseEvent } from 'react';
+import { MouseEvent, useEffect, useState } from 'react';
 import { Typography, Stack } from '@mui/material';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { selectDocument, addItem, setRoot } from '@/store/reducers/document/slice';
+import {
+  selectDocument,
+  addItem,
+  setRoot,
+  setFields,
+  setArgs,
+  addSchema,
+} from '@/store/reducers/document/slice';
 
-import { useGetDataMutaion } from '@/store/api';
+import { useGetDataMutation } from '@/store/api';
 import { getRootListQuery } from '@/queries/getRootQuery';
 
 const Root = () => {
   const { schema } = useAppSelector(selectDocument);
   const dispatch = useAppDispatch();
+  const [elemText, setElemText] = useState('');
 
-  const [getData] = useGetDataMutaion();
+  const [getData, { data, isLoading, isSuccess }] = useGetDataMutation();
 
   const handleClick = (e: MouseEvent<HTMLElement>) => {
     if (!(e.target instanceof HTMLElement)) return;
-    const elemText = (e.target.closest('button') as HTMLButtonElement).innerText.split(':')[0];
-    dispatch(addItem(elemText));
-    dispatch(setRoot(false));
+
+    const newValue = (e.target.closest('button') as HTMLButtonElement).innerText.split(':')[0];
+    setElemText(() => newValue);
+    console.log(schema);
     getData({
-      query: getRootListQuery(elemText),
-    });
+      query: getRootListQuery(newValue),
+    }).unwrap();
   };
 
-  return (
+  useEffect(() => {
+    if (isSuccess) {
+      dispatch(addItem(elemText));
+      // генерим нужные поля в стейт из даты
+      if (elemText === 'query') {
+        dispatch(addSchema(data));
+        dispatch(setFields(data.data.__schema.queryType.fields));
+        dispatch(setArgs([]));
+      }
+      if (elemText === 'mutation') {
+        dispatch(addSchema(data));
+        dispatch(setFields(data.data.__schema.mutationType.fields));
+        dispatch(setArgs([]));
+      }
+      if (elemText === 'subscription') {
+        console.log(data.data.__schema.subscriptionType);
+        dispatch(setFields(data.data.__schema.subscriptionType.fields));
+        dispatch(setArgs([]));
+      }
+      dispatch(setRoot(false));
+    }
+  }, [data]);
+
+  return isLoading ? (
+    <div>loading...</div>
+  ) : (
     <>
       <Stack direction="row" className="mb-2 mt-4">
         <Typography
