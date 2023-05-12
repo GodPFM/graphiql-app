@@ -2,7 +2,15 @@ import React, { useEffect } from 'react';
 import { Stack } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { selectDocument, setRoot, addSchema, resetRoot } from '@/store/reducers/document/slice';
+import {
+  selectDocument,
+  setRoot,
+  addSchema,
+  resetRoot,
+  sliceNavItems,
+  setArgs,
+  setFields,
+} from '@/store/reducers/document/slice';
 import Divider from './Divider';
 import { capitalize } from '@/utils/textFotmatter';
 import { useGetDataMutation } from '@/store/api';
@@ -13,10 +21,17 @@ const SchemaNaviagation = () => {
   const dispatch = useDispatch();
   const [getData, { data, isSuccess }] = useGetDataMutation();
 
-  const handleRoot = () => {
-    getData({
-      query: ROOT_QUERY,
-    });
+  const handleNav = (index: number) => {
+    if (!index) {
+      getData({
+        query: ROOT_QUERY,
+      });
+    } else {
+      dispatch(sliceNavItems(index));
+      const newData = nav[index + 1];
+      dispatch(setArgs(newData.prevArgs));
+      dispatch(setFields(newData.prevFields));
+    }
   };
 
   useEffect(() => {
@@ -38,14 +53,17 @@ const SchemaNaviagation = () => {
         return index ? (
           <React.Fragment key={index}>
             <Divider />
-            <button className="bg-transparent border-0 font-SourceSansPro">
+            <button
+              onClick={() => handleNav(index)}
+              className="hover:underline bg-transparent border-0 font-SourceSansPro"
+            >
               {item.name === 'root' ? capitalize(item.name) : item.name}
             </button>
           </React.Fragment>
         ) : (
           <button
             key={index}
-            onClick={handleRoot}
+            onClick={() => handleNav(index)}
             className="hover:underline bg-transparent border-0 font-SourceSansPro"
           >
             {item.name === 'root' ? capitalize(item.name) : item.name}

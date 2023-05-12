@@ -33,6 +33,9 @@ export const documentSlice = createSlice({
     addNavItem: (state, action: PayloadAction<NavObj>) => {
       state.nav.push(action.payload);
     },
+    sliceNavItems: (state, action: PayloadAction<number>) => {
+      state.nav = state.nav.slice(0, action.payload + 1);
+    },
     deleteNavItem: (state) => {
       state.nav.pop();
     },
@@ -76,7 +79,15 @@ export const documentSlice = createSlice({
 
 export const selectDocument = (state: RootState) => state.document;
 
-export const { addNavItem, addSchema, setRoot, setFields, setArgs, resetRoot, deleteNavItem } =
-  documentSlice.actions;
+export const {
+  addNavItem,
+  addSchema,
+  setRoot,
+  setFields,
+  setArgs,
+  resetRoot,
+  deleteNavItem,
+  sliceNavItems,
+} = documentSlice.actions;
 
 export default documentSlice.reducer;
