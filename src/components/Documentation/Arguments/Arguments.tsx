@@ -4,12 +4,7 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 import { useAppSelector } from '@/store/hooks';
 import { selectDocument } from '@/store/reducers/document/slice';
-
-interface OfType {
-  ofType: OfType;
-  name: null | string;
-  kind: string;
-}
+import { OfType } from '@/types/schema-types';
 
 function getType(node: OfType): string {
   return node.name ? node.name : getType(node.ofType);
@@ -40,7 +35,7 @@ const Arguments = () => {
                 </Typography>
                 <Typography
                   fontFamily={'Source Code Pro'}
-                  className="ml-2 text-[14px] text-color-documentation-secondary"
+                  className="ml-2 text-[14px] text-color-documentation-secondary hover:underline"
                 >
                   [{getType(item.type)}]
                 </Typography>

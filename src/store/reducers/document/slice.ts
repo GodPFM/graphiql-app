@@ -1,33 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '@/store/store';
 import { HYDRATE } from 'next-redux-wrapper';
-import { Schema } from '@/types/schema-types';
-
-interface ActionHydrate {
-  payload: RootState;
-  type: string;
-}
-
-type Data = {
-  data: Schema;
-};
-
-interface Fields {
-  name: string;
-  args: Args;
-  type: OfType;
-}
-
-interface Args {
-  name: string;
-  defaultValue: null;
-}
-
-interface OfType {
-  ofType: OfType;
-  name: null | string;
-  kind: string;
-}
+import { ActionHydrate, Data, Fields, Args } from '@/types/schema-types';
 
 interface InitialState {
   nav: string[];
