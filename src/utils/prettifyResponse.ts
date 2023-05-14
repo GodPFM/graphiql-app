@@ -7,6 +7,9 @@ export const prettifyResponse = (data: string) => {
         newArray.push(oldArray.slice(startIndex, index));
         startIndex = index + 1;
       }
+      if (oldArray[index + 1] === undefined) {
+        newArray.push(oldArray.slice(startIndex, index + 1));
+      }
       return newArray;
     }, [])
     .reduce((newArray: Array<Array<string | null>>, string) => {
