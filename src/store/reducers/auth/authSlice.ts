@@ -1,8 +1,9 @@
 import { KindForm } from '@/types/enums';
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
 interface Auth {
   id: string | null;
+  login: string | null;
   token: string | null;
   isLoading: boolean;
   error: string | null;
@@ -11,9 +12,10 @@ interface Auth {
 
 const initialState: Auth = {
   id: null,
+  login: null,
   token: null,
   kindOfForm: KindForm.login,
-  isLoading: false,
+  isLoading: true,
   error: null,
 };
 
@@ -23,6 +25,7 @@ export const authSlice = createSlice({
   reducers: {
     setUser(state, action) {
       state.id = action.payload.id;
+      state.login = action.payload.login;
       state.token = action.payload.token;
     },
     setIsLoading(state, action) {
@@ -31,6 +34,7 @@ export const authSlice = createSlice({
 
     removeUser(state) {
       state.id = null;
+      state.login = null;
       state.token = null;
     },
     changeKindOfForm(state, action) {

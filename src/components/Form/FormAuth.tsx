@@ -5,7 +5,7 @@ import FormSignin from './FormSignin';
 import { FormAuthType } from '@/types/types';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { authActions } from '@/store/reducers/auth/authSlice';
-import { firebaseAuth } from 'firebase.config';
+import { auth } from 'firebase.config';
 import Router from 'next/router';
 import { Alert, AlertTitle, Backdrop, CircularProgress } from '@mui/material';
 
@@ -14,7 +14,7 @@ const FormAuth = () => {
   const dispatch = useAppDispatch();
   const handleSubmit = (data: FormAuthType) => {
     if (kindOfForm === KindForm.login) {
-      signInWithEmailAndPassword(firebaseAuth, data.email, data.password)
+      signInWithEmailAndPassword(auth, data.email, data.password)
         .then(({ user }) => {
           dispatch(authActions.setIsLoading(true));
           dispatch(authActions.setUser({ id: user.uid, token: user.refreshToken }));
@@ -27,7 +27,7 @@ const FormAuth = () => {
         });
     }
     if (kindOfForm === KindForm.signin) {
-      createUserWithEmailAndPassword(firebaseAuth, data.email, data.password)
+      createUserWithEmailAndPassword(auth, data.email, data.password)
         .then(({ user }) => {
           dispatch(authActions.setIsLoading(true));
           dispatch(authActions.setUser({ id: user.uid, token: user.refreshToken }));

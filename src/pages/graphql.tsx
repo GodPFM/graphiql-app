@@ -7,7 +7,7 @@ const Graphql = () => {
   const { id, isLoading } = useAppSelector((state) => state.auth);
   const router = useRouter();
   useEffect(() => {
-    if (!isLoading && !id) router.push('/auth');
+    if (!isLoading && !id) router.push('/');
   }, [isLoading, id]);
   return <>{id ? <Columns /> : <></>}</>;
 };
