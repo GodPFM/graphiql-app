@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useAppSelector } from '@/hooks/redux';
 import { preview } from 'vite';
+import { array } from 'yup';
+import slice from '@/store/reducers/editorTabs/slice';
 
 export function Editor() {
   const [code, setCode] = useState<Array<Array<string>>>([['']]);
@@ -132,6 +134,13 @@ export function Editor() {
           activeLineSymbol + 1 > getActiveLineLength() ? activeLineSymbol : activeLineSymbol + 1
         );
         break;
+      case 'Home':
+        setActiveLineSymbol(0);
+        break;
+      case 'End':
+        setActiveLineSymbol(getActiveLineLength());
+
+        break;
     }
   };
 
@@ -176,17 +185,59 @@ export function Editor() {
 
   const inputEvent = async (e: React.KeyboardEvent) => {
     if (isFocus) {
-      if (e.key.length === 1) {
-        addNewLetter(e.key);
+      if ((e.ctrlKey || e.metaKey) && (e.key === 'v' || e.key === 'м')) {
+        navigator.clipboard.readText().then((text) => {
+          const strings = text.split(/\r?\n/);
+          const words = strings.map((st) => st.replace(/ /g, '  ').split(/\s/));
+          words.forEach(
+            (word, index, arr) =>
+              (arr[index] = word.map((elem) => (elem.length == 0 ? elem.replace('', ' ') : elem)))
+          );
+          const copyCode = JSON.parse(JSON.stringify(code));
+          const { word, position } = getCurrentWord();
+          console.log(copyCode);
+
+          if (copyCode.length == 1 && copyCode[0] == '') {
+            setCode(words);
+            setActiveLine(words.length - 1);
+          } else if (copyCode.length - 1 == activeLine) {
+            copyCode.push(words);
+            setCode(copyCode);
+            setActiveLine(copyCode.length - 1);
+          } else {
+            const newCodeArray = copyCode
+              .slice(0, activeLine)
+              .concat([
+                ...copyCode[activeLine].slice(0, word),
+                words[0],
+                ...copyCode[activeLine].slice(word + 1),
+              ])
+              .concat(words.slice(1))
+              .concat(copyCode.slice(activeLine));
+
+            setCode(newCodeArray);
+          }
+        });
       } else {
-        if (e.key === 'Enter') {
-          addNewLine();
-        }
-        if (e.key.includes('Arrow')) {
-          arrowNavigation(e.key);
-        }
-        if (e.key === 'Backspace') {
-          deleteSymbol();
+        if (e.key.length === 1) {
+          addNewLetter(e.key);
+        } else {
+          if (e.key === 'Enter') {
+            addNewLine();
+          }
+          if (e.key.includes('Arrow')) {
+            arrowNavigation(e.key);
+          }
+          if (e.key === 'Backspace') {
+            deleteSymbol();
+          }
+
+          if (e.key === 'Home') {
+            arrowNavigation(e.key);
+          }
+          if (e.key === 'End') {
+            arrowNavigation(e.key);
+          }
         }
       }
     }
