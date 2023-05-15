@@ -5,6 +5,7 @@ import { graphQl } from './api';
 import documentReducer from './reducers/document/slice';
 import editorReducer from './reducers/editor/slice';
 import authReducer from './reducers/auth/authSlice';
+import languageReducer from './reducers/language/slice';
 
 type TypeToolkitRaw = typeof toolkitRaw & { default?: unknown };
 const { combineReducers, configureStore } = ((toolkitRaw as TypeToolkitRaw).default ??
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
   document: documentReducer,
   editor: editorReducer,
   auth: authReducer,
+  language: languageReducer,
   [graphQl.reducerPath]: graphQl.reducer,
 });
 

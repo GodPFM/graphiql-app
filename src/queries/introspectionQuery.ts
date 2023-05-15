@@ -1,6 +1,6 @@
 import { TYPE_REF, INPUT_VALUE } from './fragments';
 
-export const ROOT_QUERY = `${TYPE_REF + INPUT_VALUE}
+export const ROOT_QUERY = /* GraphQL */ `${TYPE_REF + INPUT_VALUE}
 {
   __schema {
     queryType {

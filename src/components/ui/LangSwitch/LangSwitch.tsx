@@ -1,7 +1,11 @@
+import { useEffect } from 'react';
 import { styled } from '@mui/material/styles';
 import { Switch } from '@mui/material';
+import { useTranslation } from 'react-i18next';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { selectLanguage, setAppLanguage } from '@/store/reducers/language/slice';
 
-export const LangSwitch = styled(Switch)(({ theme }) => ({
+const StyledSwitch = styled(Switch)(({ theme }) => ({
   padding: 8,
   '& .MuiSwitch-switchBase': {
     padding: 10,
@@ -32,3 +36,19 @@ export const LangSwitch = styled(Switch)(({ theme }) => ({
     backgroundColor: '#566992',
   },
 }));
+
+export default function LangSwitch() {
+  const dispatch = useAppDispatch();
+  const { language } = useAppSelector(selectLanguage);
+  const { i18n } = useTranslation();
+
+  const handleLang = () => {
+    dispatch(setAppLanguage(language === 'en' ? 'ru' : 'en'));
+  };
+
+  useEffect(() => {
+    i18n.changeLanguage(language);
+  }, [language]);
+
+  return <StyledSwitch defaultChecked onClick={handleLang} />;
+}

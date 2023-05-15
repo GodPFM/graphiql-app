@@ -1,4 +1,4 @@
-export const TYPE_REF = `fragment TypeRef on __Type {
+export const TYPE_REF = /* GraphQL */ `fragment TypeRef on __Type {
   kind
   name
   ofType {
@@ -33,7 +33,7 @@ export const TYPE_REF = `fragment TypeRef on __Type {
 
 `;
 
-export const INPUT_VALUE = `fragment InputValue on __InputValue {
+export const INPUT_VALUE = /* GraphQL */ `fragment InputValue on __InputValue {
   name
   type {
     ...TypeRef
@@ -43,7 +43,7 @@ export const INPUT_VALUE = `fragment InputValue on __InputValue {
 
 `;
 
-export const FULL_TYPE = `fragment FullType on __Type {
+export const FULL_TYPE = /* GraphQL */ `fragment FullType on __Type {
   kind
   name
   description
