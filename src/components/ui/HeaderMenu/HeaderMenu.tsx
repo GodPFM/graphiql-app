@@ -6,6 +6,8 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { KindForm } from '@/types/enums';
 import { authActions } from '@/store/reducers/auth/authSlice';
 import { useRouter } from 'next/router';
+import { signOut } from 'firebase/auth';
+import { auth } from 'firebase.config';
 
 interface IProps {
   isBurger: boolean;
@@ -14,7 +16,7 @@ interface IProps {
 }
 
 const HeaderMenu = (props: IProps) => {
-  const { kindOfForm, id } = useAppSelector((state) => state.auth);
+  const { kindOfForm, id, login } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
   const router = useRouter();
   const handleClick = (
@@ -29,6 +31,7 @@ const HeaderMenu = (props: IProps) => {
 
           break;
         case 'logout':
+          signOut(auth);
           dispatch(authActions.changeKindOfForm(KindForm.login));
           dispatch(authActions.removeUser());
           router.push('/');
@@ -52,22 +55,24 @@ const HeaderMenu = (props: IProps) => {
       className={`${props.classes}`}
     >
       {id ? (
-        <Button
-          name="logout"
-          variant="contained"
-          className="bg-color-dark-blue font-semibold h-[28px] normal-case text-[14px] hover:bg-color-dark-blue-hover"
-          onClick={handleClick}
-        >
-          Log out
-        </Button>
+        <>
+          <p className="font-SourceSansPro text-white cursor-default">{login}</p>
+          <Button
+            name="logout"
+            variant="contained"
+            className="bg-color-dark-blue font-semibold h-[28px] normal-case text-[14px] hover:bg-color-dark-blue-hover"
+            onClick={handleClick}
+          >
+            Log out
+          </Button>
+        </>
       ) : (
         <>
           <Button
             name="signin"
             variant="contained"
-            className={`font-SourceSansPro font-semibold text-white leading-5 h-[28px] normal-case text-[14px] hover:bg-color-dark-blue-hover ${
-              kindOfForm == KindForm.signin ? 'bg-color-dark-blue ' : 'bg-transparent'
-            }`}
+            className={`font-SourceSansPro font-semibold text-white leading-5 h-[28px] normal-case text-[14px] hover:bg-color-dark-blue-hover ${kindOfForm == KindForm.signin ? 'bg-color-dark-blue ' : 'bg-transparent'
+              }`}
             onClick={handleClick}
           >
             Sign in
@@ -75,9 +80,8 @@ const HeaderMenu = (props: IProps) => {
           <Button
             name="login"
             variant="contained"
-            className={`font-SourceSansPro font-semibold leading-5text-white hover:bg-color-dark-blue-hover h-[28px] normal-case text-[14px] ${
-              kindOfForm == KindForm.login ? 'bg-color-dark-blue ' : 'bg-transparent'
-            }`}
+            className={`font-SourceSansPro font-semibold leading-5text-white hover:bg-color-dark-blue-hover h-[28px] normal-case text-[14px] ${kindOfForm == KindForm.login ? 'bg-color-dark-blue ' : 'bg-transparent'
+              }`}
             onClick={handleClick}
           >
             Log in
