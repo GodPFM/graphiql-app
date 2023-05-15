@@ -1,14 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useAppSelector } from '@/hooks/redux';
-import { preview } from 'vite';
-import { array } from 'yup';
-import slice from '@/store/reducers/editorTabs/slice';
 
 export function Editor() {
   const [code, setCode] = useState<Array<Array<string>>>([['']]);
   const [activeLine, setActiveLine] = useState(0);
   const [activeLineSymbol, setActiveLineSymbol] = useState(0);
-  const [activeLineWord, setActiveLineWord] = useState(0);
   const { tabs, activeTabId } = useAppSelector((state) => state.editorTab);
   const [isFocus, setIsFocus] = useState(false);
   const [requestCode, setRequestCode] = useState('');
@@ -41,16 +37,52 @@ export function Editor() {
     setIsFocus(false);
   };
 
-  const test = () => {
+  const clickNavigation = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    const line = e.currentTarget.getAttribute('data-line');
+    // @ts-ignore
+    const word = e.target.getAttribute('data-letter');
+    console.log(word);
+    const position = window.getSelection()?.focusOffset;
+    if (line) {
+      setActiveLine(Number(line));
+    }
+    if (word) {
+      let lineLength = 0;
+      for (let i = 0; i < word; i++) {
+        if (Number(line) >= 0) {
+          lineLength += code[Number(line)][i].length;
+        }
+      }
+      if (position) {
+        if (code[Number(line)][word] === ' ') {
+          setActiveLineSymbol(lineLength + 1);
+        } else {
+          setActiveLineSymbol(lineLength + position);
+        }
+      }
+    } else {
+      if (line) {
+        setActiveLineSymbol(getActiveLineLength(Number(line)));
+      }
+    }
     console.log(window.getSelection());
+  };
+
+  const editorClickEvent = () => {
+    const line = code.length;
+    const lastSymbol = getActiveLineLength(line - 1);
+    setActiveLine(line - 1);
+    setActiveLineSymbol(lastSymbol);
   };
 
   const updateCode = (newCodeArray: Array<Array<string>>) => {
     setCode(newCodeArray);
   };
 
-  const getActiveLineLength = () => {
-    return code[activeLine].reduce((acc, item) => acc + item.length, 0);
+  const getActiveLineLength = (line?: number) => {
+    const lineToCalc = line ?? activeLine;
+    return code[lineToCalc].reduce((acc, item) => acc + item.length, 0);
   };
 
   const getCurrentWord = () => {
@@ -70,26 +102,49 @@ export function Editor() {
   const addNewLetter = (letter: string) => {
     let newCodeArray;
     const { word, position } = getCurrentWord();
-    if (letter === ' ') {
+    if (!letter.match(/\w|[А-я]/gm) || letter === 'Tab') {
       newCodeArray = code.map((item, index) => {
         if (index === activeLine) {
-          const itemArray = [
-            ...item.slice(0, word - 1),
-            item[word - 1].slice(0, position),
-            ' ',
-            item[word - 1].slice(position),
-            ...item.slice(word),
-          ];
-          return itemArray;
+          const rightSide = item[word - 1].slice(position);
+          let itemArray;
+          const newLetter = letter === '{' ? ['{', '}'] : letter === 'Tab' ? [' ', ' '] : [letter];
+          if (item.slice(word).length) {
+            if (rightSide) {
+              itemArray = [
+                ...item.slice(0, word - 1),
+                item[word - 1].slice(0, position),
+                ...newLetter,
+                item[word - 1].slice(position),
+                ...item.slice(word),
+              ];
+            } else {
+              itemArray = [
+                ...item.slice(0, word - 1),
+                item[word - 1].slice(0, position),
+                ...newLetter,
+                ...item.slice(word),
+              ];
+            }
+          } else {
+            itemArray = [
+              ...item.slice(0, word - 1),
+              item[word - 1].slice(0, position),
+              ...newLetter,
+              item[word - 1].slice(position),
+              ...item.slice(word),
+            ];
+          }
+          const filterArray = itemArray.filter((str) => str !== '');
+          return filterArray.length ? filterArray : [''];
         }
         return item;
       });
-      setActiveLineWord((prevState) => prevState + 1);
     } else {
       newCodeArray = code.map((item, index) => {
         if (index === activeLine) {
           let addToCount = 0;
-          if (item[word - 1] === ' ') {
+          if (!item[word - 1].match(/\w|[А-я]/gm)) {
+            item.splice(word, 0, '');
             addToCount += 1;
           }
           const newLineArray = item[word + addToCount - 1].split('');
@@ -100,20 +155,46 @@ export function Editor() {
             newLine,
             ...item.slice(word + addToCount),
           ];
-          setActiveLineWord(word - 1 + addToCount);
           return newItem;
         }
         return item;
       });
     }
-    setActiveLineSymbol((prevState) => prevState + 1);
+    if (letter === 'Tab') {
+      setActiveLineSymbol((prevState) => prevState + 2);
+    } else {
+      setActiveLineSymbol((prevState) => prevState + 1);
+    }
     updateCode(newCodeArray);
   };
 
   const addNewLine = () => {
-    const newArray = [...code.slice(0, activeLine + 1), [''], ...code.slice(activeLine + 1)];
+    let newArray;
+    const lineLength = getActiveLineLength();
+    if (activeLineSymbol === lineLength) {
+      newArray = [...code.slice(0, activeLine + 1), [''], ...code.slice(activeLine + 1)];
+    } else {
+      const { word, position } = getCurrentWord();
+      let restLine = [''];
+      newArray = code.map((item, index) => {
+        if (index === activeLine) {
+          const newLine = [
+            ...item.slice(0, word - 1),
+            item[word - 1].split('').slice(0, position).join(''),
+          ];
+          const firstWord = item[word - 1].split('').slice(position).join('');
+          if (firstWord) {
+            restLine = [item[word - 1].split('').slice(position).join(''), ...item.slice(word)];
+          } else {
+            restLine = [...item.slice(word)];
+          }
+          return newLine;
+        }
+        return item;
+      });
+      newArray.splice(activeLine + 1, 0, restLine);
+    }
     setActiveLine((prevState) => prevState + 1);
-    setActiveLineWord(0);
     setActiveLineSymbol(0);
     updateCode(newArray);
   };
@@ -144,6 +225,10 @@ export function Editor() {
     }
   };
 
+  const cursorToEnd = () => {
+    setActiveLineSymbol(getActiveLineLength());
+  };
+
   const deleteSymbol = () => {
     const lineLength = getActiveLineLength();
     const { word, position } = getCurrentWord();
@@ -155,7 +240,7 @@ export function Editor() {
       const newActiveLine = activeLine - 1 >= 0 ? activeLine - 1 : activeLine;
       setCode(newArray);
       setActiveLine(newActiveLine);
-      setActiveLineSymbol(getActiveLineLength());
+      setActiveLineSymbol(getActiveLineLength(activeLine - 1));
     } else {
       if (activeLineSymbol !== 0) {
         const newArray = code.map((item, index) => {
@@ -167,17 +252,42 @@ export function Editor() {
             let newLine;
             if (newString) {
               newLine = [...item.slice(0, word - 1), newString, ...item.slice(word)];
-            } else if (activeLine === 0 && activeLineSymbol === 1) {
+            } else if (activeLine === 0 && activeLineSymbol === 1 && getActiveLineLength() === 1) {
               newLine = [''];
             } else {
               newLine = [...item.slice(0, word - 1), ...item.slice(word)];
             }
             setActiveLineSymbol((prevState) => prevState - 1);
             console.log(newLine);
+            if (newLine.length === 0) {
+              newLine = [''];
+            }
             return newLine;
           }
           return item;
         });
+        updateCode(newArray);
+      }
+      if (activeLineSymbol === 0) {
+        if (activeLine === 0) {
+          return;
+        }
+        const lineToDelete = code[activeLine];
+        let newLine;
+        const wordOnEndOfPrevLine = code[activeLine - 1].at(-1);
+        if (wordOnEndOfPrevLine && wordOnEndOfPrevLine === ' ') {
+          newLine = [...code[activeLine - 1], ...lineToDelete];
+        } else {
+          newLine = [
+            ...code[activeLine - 1].slice(0, -1),
+            code[activeLine - 1][code[activeLine - 1].length - 1] + lineToDelete[0],
+            ...lineToDelete.slice(1),
+          ];
+        }
+        const newArray = [...code.slice(0, activeLine - 1), newLine, ...code.slice(activeLine + 1)];
+        console.log(getActiveLineLength(activeLine - 1));
+        setActiveLineSymbol(getActiveLineLength(activeLine - 1));
+        setActiveLine((prevState) => prevState - 1);
         updateCode(newArray);
       }
     }
@@ -219,57 +329,71 @@ export function Editor() {
           }
         });
       } else {
-        if (e.key.length === 1) {
-          addNewLetter(e.key);
-        } else {
-          if (e.key === 'Enter') {
-            addNewLine();
-          }
-          if (e.key.includes('Arrow')) {
-            arrowNavigation(e.key);
-          }
-          if (e.key === 'Backspace') {
-            deleteSymbol();
-          }
-
-          if (e.key === 'Home') {
-            arrowNavigation(e.key);
-          }
-          if (e.key === 'End') {
-            arrowNavigation(e.key);
-          }
+        if (e.key === 'Enter') {
+          addNewLine();
+        }
+        if (e.key === 'Tab') {
+          e.preventDefault();
+          addNewLetter('Tab');
+        }
+        if (e.key === 'End') {
+          cursorToEnd();
+        }
+        if (e.key === 'Home') {
+          setActiveLineSymbol(0);
+        }
+        if (e.key.includes('Arrow')) {
+          arrowNavigation(e.key);
+        }
+        if (e.key === 'Backspace') {
+          deleteSymbol();
         }
       }
     }
   };
   return (
-    <div
-      tabIndex={0}
-      className="text-black min-h-[500px] h-full grow relative font-SourceCodePro leading-5 outline-0 cursor-text"
-      onFocus={focusEvent}
-      onBlur={blurEvent}
-      onKeyDown={inputEvent}
-    >
-      {code.map((item, index) => (
-        <div
-          className="min-h-[20px] whitespace-pre cursor-text truncate"
-          key={index}
-          data-line={index}
-          onClick={test}
-        >
-          {item.map((element, indexLetter) => (
-            <span key={indexLetter} data-letter={indexLetter}>
-              {element}
-            </span>
-          ))}
-        </div>
-      ))}
+    <div className="flex h-full">
+      <div className="text-black pr-3">
+        {code.map((item, index) => (
+          <div
+            key={index + 10}
+            className={`leading-5 font-SourceCodePro text-center min-w-[20px] ${
+              index === activeLine ? 'text-color-code-active' : 'text-color-code'
+            }`}
+          >
+            {index + 1}
+          </div>
+        ))}
+      </div>
       <div
-        className={`absolute h-[24px] w-[2px] bg-black animate-blink-cursor ${
-          isFocus ? 'visible' : 'hidden'
-        }`}
-        style={{ top: `${height}px`, left: `${left}px` }}
-      />
+        tabIndex={0}
+        className="text-black min-h-[500px] h-full grow relative font-SourceCodePro leading-5 outline-0 cursor-text"
+        onFocus={focusEvent}
+        onBlur={blurEvent}
+        onKeyDown={inputEvent}
+        onClick={editorClickEvent}
+      >
+        {code.map((item, index) => (
+          <div
+            className="min-h-[20px] whitespace-pre cursor-text truncate"
+            key={index}
+            data-line={index}
+            onClick={clickNavigation}
+          >
+            {item.map((element, indexLetter) => (
+              <span key={indexLetter} data-letter={indexLetter}>
+                {element}
+              </span>
+            ))}
+          </div>
+        ))}
+        <div
+          className={`absolute h-[24px] w-[2px] bg-black animate-blink-cursor ${
+            isFocus ? 'visible' : 'hidden'
+          }`}
+          style={{ top: `${height}px`, left: `${left}px` }}
+        />
+      </div>
     </div>
   );
 }
