@@ -75,8 +75,9 @@ const HeaderMenu = (props: IProps) => {
           <Button
             name="signin"
             variant="contained"
-            className={`font-SourceSansPro font-semibold text-white leading-5 h-[28px] normal-case text-[14px] hover:bg-color-dark-blue-hover ${kindOfForm == KindForm.signin ? 'bg-color-dark-blue ' : 'bg-transparent'
-              }`}
+            className={`font-SourceSansPro font-semibold text-white leading-5 h-[28px] normal-case text-[14px] hover:bg-color-dark-blue-hover ${
+              kindOfForm == KindForm.signin ? 'bg-color-dark-blue ' : 'bg-transparent'
+            }`}
             onClick={handleClick}
           >
             {t('header.signin')}
@@ -84,8 +85,9 @@ const HeaderMenu = (props: IProps) => {
           <Button
             name="login"
             variant="contained"
-            className={`font-SourceSansPro font-semibold leading-5text-white hover:bg-color-dark-blue-hover h-[28px] normal-case text-[14px] ${kindOfForm == KindForm.login ? 'bg-color-dark-blue ' : 'bg-transparent'
-              }`}
+            className={`font-SourceSansPro font-semibold leading-5text-white hover:bg-color-dark-blue-hover h-[28px] normal-case text-[14px] ${
+              kindOfForm == KindForm.login ? 'bg-color-dark-blue ' : 'bg-transparent'
+            }`}
             onClick={handleClick}
           >
             {t('header.login')}
