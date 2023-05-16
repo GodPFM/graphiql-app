@@ -49,6 +49,12 @@
       "password_8_length": "Password should be of minimum 8 characters length",
       "password_must_much": "Password must much",
       "password_repeat": "Repeat password"
-    }
+    },
+    "placeholders": {
+      "email": "Email Address",
+      "pass": "Password",
+      "repeat_pass": "Repeat password"
+    },
+    "error": "Error"
   }
 }

@@ -8,8 +8,10 @@ import { authActions } from '@/store/reducers/auth/authSlice';
 import { auth } from 'firebase.config';
 import Router from 'next/router';
 import { Alert, AlertTitle, Backdrop, CircularProgress } from '@mui/material';
+import { useTranslation } from 'next-i18next';
 
 const FormAuth = () => {
+  const { t } = useTranslation();
   const { kindOfForm, isLoading, error } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
   const handleSubmit = (data: FormAuthType) => {
@@ -50,7 +52,7 @@ const FormAuth = () => {
       )}
       {error && (
         <Alert severity="error" className="text-left">
-          <AlertTitle>Error</AlertTitle>
+          <AlertTitle>{t('auth_page.error')}</AlertTitle>
           {error}
         </Alert>
       )}

@@ -66,12 +66,12 @@ const FormLogin = ({ onSubmit }: Props) => {
 
           <TextFieldStyled
             name="email"
-            label="Email Address"
+            label={t('auth_page.placeholders.email')}
             image={<Image alt="" src={mailIcon} className="w-[1.2rem]" />}
           />
           <TextFieldStyled
             name="password"
-            label="Password"
+            label={t('auth_page.placeholders.pass')}
             type="password"
             image={<Image alt="" src={passwordIcon} className="w-[1rem]" />}
           />
