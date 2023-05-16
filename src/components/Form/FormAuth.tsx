@@ -9,9 +9,11 @@ import { auth } from 'firebase.config';
 import Router from 'next/router';
 import { Alert, AlertTitle, Backdrop, CircularProgress } from '@mui/material';
 import { useTranslation } from 'next-i18next';
+import { selectLanguage } from '@/store/reducers/language/slice';
 
 const FormAuth = () => {
   const { t } = useTranslation();
+  const { language } = useAppSelector(selectLanguage);
   const { kindOfForm, isLoading, error } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
   const handleSubmit = (data: FormAuthType) => {
@@ -21,7 +23,7 @@ const FormAuth = () => {
           dispatch(authActions.setIsLoading(true));
           dispatch(authActions.setUser({ id: user.uid, token: user.refreshToken }));
           dispatch(authActions.setIsLoading(false));
-          Router.push('/graphql');
+          Router.push(`/${language}/graphql`, `/${language}/graphql`, { locale: language });
         })
         .catch((error) => {
           dispatch(authActions.setError(error.message));
@@ -33,7 +35,7 @@ const FormAuth = () => {
         .then(({ user }) => {
           dispatch(authActions.setIsLoading(true));
           dispatch(authActions.setUser({ id: user.uid, token: user.refreshToken }));
-          Router.push('/graphql');
+          Router.push(`/${language}/graphql`, `/${language}/graphql`, { locale: language });
           dispatch(authActions.setIsLoading(false));
         })
         .catch((error) => {

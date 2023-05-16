@@ -24,11 +24,10 @@ const Error = () => {
   );
 };
 
-export const getStaticProps = wrapper.getStaticProps((store) => async () => {
-  const { language } = store.getState().language;
+export const getStaticProps = wrapper.getStaticProps(() => async ({ locale }) => {
   return {
     props: {
-      ...(await serverSideTranslations(language, ['common'], null, ['en', 'ru'])),
+      ...(await serverSideTranslations(locale ?? 'en', ['common'], null, ['en', 'ru'])),
     },
   };
 });

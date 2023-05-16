@@ -6,19 +6,20 @@ import { wrapper } from '../store/store';
 import { addSchema } from '../store/reducers/document/slice';
 import { ROOT_QUERY } from '../queries/introspectionQuery';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { selectLanguage } from '@/store/reducers/language/slice';
 
 const Graphql = () => {
   const { id, isLoading } = useAppSelector((state) => state.auth);
+  const { language } = useAppSelector(selectLanguage);
   const router = useRouter();
   useEffect(() => {
-    if (!isLoading && !id) router.push('/');
+    if (!isLoading && !id) router.push(`/${language}/`, `/${language}/`, { locale: language });
   }, [isLoading, id]);
   return <>{id ? <Columns /> : <></>}</>;
 };
 
-export const getServerSideProps = wrapper.getServerSideProps((store) => async () => {
+export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ locale }) => {
   const baseUrl = 'https://api.escuelajs.co/graphql';
-  const { language } = store.getState().language;
 
   const res = await fetch(baseUrl, {
     method: 'POST',
@@ -33,7 +34,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ()
 
   return {
     props: {
-      ...(await serverSideTranslations(language, ['common'], null, ['en', 'ru'])),
+      ...(await serverSideTranslations(locale ?? 'en', ['common'], null, ['en', 'ru'])),
     },
   };
 });

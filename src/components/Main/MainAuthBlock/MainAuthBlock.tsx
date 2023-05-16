@@ -5,8 +5,10 @@ import Button from '@mui/material/Button';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { useTranslation } from 'next-i18next';
+import { selectLanguage } from '@/store/reducers/language/slice';
 
 export const MainAuthBlock = () => {
+  const { language } = useAppSelector(selectLanguage);
   const { t } = useTranslation();
   const { id } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
@@ -17,7 +19,7 @@ export const MainAuthBlock = () => {
     event.preventDefault();
     if (event.target instanceof HTMLButtonElement && event.target.name) {
       if (id) {
-        router.push('/graphql');
+        router.push(`/${language}/graphql`, `/${language}/graphql`, { locale: language });
       } else {
         switch (event.target?.name) {
           case 'login':
@@ -27,7 +29,7 @@ export const MainAuthBlock = () => {
             dispatch(authActions.changeKindOfForm(KindForm.signin));
             break;
         }
-        router.push('/auth');
+        router.push(`/${language}/auth`, `/${language}/auth`, { locale: language });
       }
     }
   };

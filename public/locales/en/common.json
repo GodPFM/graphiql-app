@@ -5,7 +5,8 @@
   },
   "header": {
     "login": "Log in",
-    "signin": "Sign in"
+    "signin": "Sign in",
+    "logout": "Log out"
   },
   "footer": {
     "team": [

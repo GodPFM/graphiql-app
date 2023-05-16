@@ -18,12 +18,10 @@ const Auth = () => (
   </div>
 );
 
-export const getServerSideProps = wrapper.getServerSideProps((store) => async () => {
-  const { language } = store.getState().language;
-
+export const getServerSideProps = wrapper.getServerSideProps(() => async ({ locale }) => {
   return {
     props: {
-      ...(await serverSideTranslations(language, ['common'], null, ['en', 'ru'])),
+      ...(await serverSideTranslations(locale ?? 'en', ['common'], null, ['en', 'ru'])),
     },
   };
 });
