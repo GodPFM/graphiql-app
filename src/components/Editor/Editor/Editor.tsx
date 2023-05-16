@@ -345,30 +345,27 @@ export function Editor() {
   };
   const inputEvent = async (e: React.KeyboardEvent) => {
     if (isFocus) {
-      if ((e.ctrlKey || e.metaKey) && (e.key === 'v' || e.key === 'м')) {
+      if (e.key.length === 1) {
+        addNewLetter(e.key);
       } else {
-        if (e.key.length === 1) {
-          addNewLetter(e.key);
-        } else {
-          if (e.key === 'Enter') {
-            addNewLine();
-          }
-          if (e.key === 'Tab') {
-            e.preventDefault();
-            addNewLetter('Tab');
-          }
-          if (e.key === 'End') {
-            cursorToEnd();
-          }
-          if (e.key === 'Home') {
-            setActiveLineSymbol(0);
-          }
-          if (e.key.includes('Arrow')) {
-            arrowNavigation(e.key);
-          }
-          if (e.key === 'Backspace') {
-            deleteSymbol();
-          }
+        if (e.key === 'Enter') {
+          addNewLine();
+        }
+        if (e.key === 'Tab') {
+          e.preventDefault();
+          addNewLetter('Tab');
+        }
+        if (e.key === 'End') {
+          cursorToEnd();
+        }
+        if (e.key === 'Home') {
+          setActiveLineSymbol(0);
+        }
+        if (e.key.includes('Arrow')) {
+          arrowNavigation(e.key);
+        }
+        if (e.key === 'Backspace') {
+          deleteSymbol();
         }
       }
     }
