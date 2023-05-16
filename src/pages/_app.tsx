@@ -2,7 +2,8 @@ import '../styles/globals.css';
 
 import { Provider } from 'react-redux';
 import type { AppProps } from 'next/app';
-import '@/i18n';
+import { appWithTranslation } from 'next-i18next';
+// import '@/i18n';
 
 import Layout from '../components/Layout/Layout';
 import { wrapper } from '../store/store';
@@ -23,4 +24,4 @@ export function App({ Component, pageProps }: AppProps) {
   );
 }
 
-export default App;
+export default appWithTranslation(App);

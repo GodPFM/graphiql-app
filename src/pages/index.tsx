@@ -6,6 +6,8 @@ import { MainCodeRequest } from '@/components/Main/MainCodeRequest/MainCodeReque
 import { MainCodeResponce } from '@/components/Main/MainCodeResponce/MainCodeResponce';
 import { MainAuthBlock } from '@/components/Main/MainAuthBlock/MainAuthBlock';
 import GraphLogoBlock from '@/components/GraphLogoBlock/GraphLogoBlock';
+import { wrapper } from '@/store/store';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 const Home = () => {
   const request = {
@@ -36,5 +38,15 @@ const Home = () => {
     </div>
   );
 };
+
+export const getServerSideProps = wrapper.getServerSideProps((store) => async () => {
+  const { language } = store.getState().language;
+
+  return {
+    props: {
+      ...(await serverSideTranslations(language, ['common'], null, ['en', 'ru'])),
+    },
+  };
+});
 
 export default Home;

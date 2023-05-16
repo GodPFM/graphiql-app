@@ -1,9 +1,9 @@
-import { useEffect } from 'react';
 import { styled } from '@mui/material/styles';
 import { Switch } from '@mui/material';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'next-i18next';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { selectLanguage, setAppLanguage } from '@/store/reducers/language/slice';
+import { useEffect } from 'react';
 
 const StyledSwitch = styled(Switch)(({ theme }) => ({
   padding: 8,

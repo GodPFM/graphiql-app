@@ -5,6 +5,7 @@ import Columns from '../components/Columns/Columns';
 import { wrapper } from '../store/store';
 import { addSchema } from '../store/reducers/document/slice';
 import { ROOT_QUERY } from '../queries/introspectionQuery';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 const Graphql = () => {
   const { id, isLoading } = useAppSelector((state) => state.auth);
@@ -17,6 +18,7 @@ const Graphql = () => {
 
 export const getServerSideProps = wrapper.getServerSideProps((store) => async () => {
   const baseUrl = 'https://api.escuelajs.co/graphql';
+  const { language } = store.getState().language;
 
   const res = await fetch(baseUrl, {
     method: 'POST',
@@ -30,7 +32,9 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ()
   store.dispatch(addSchema(res));
 
   return {
-    props: {},
+    props: {
+      ...(await serverSideTranslations(language, ['common'], null, ['en', 'ru'])),
+    },
   };
 });
 
