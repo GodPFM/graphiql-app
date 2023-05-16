@@ -2,5 +2,32 @@
   "404": {
     "oops": "Ooops... Something went wrong",
     "not-found": "Page not found"
+  },
+  "header": {
+    "login": "Log in",
+    "signin": "Sign in"
+  },
+  "footer": {
+    "team": [
+      {
+        "name": "Asmeev Daniil"
+      },
+      {
+        "name": "Chervyakov Vladislav"
+      },
+      {
+        "name": "Makarova Polina"
+      }
+    ]
+  },
+  "welcome_page": {
+    "ask_for": "Ask for what you want",
+    "get_results": "Get predictable results",
+    "form": {
+      "welcome": "Welcome!",
+      "desc": "To start using the service, please log in with your account",
+      "login": "Log in",
+      "signin": "Sign in"
+    }
   }
 }

@@ -8,6 +8,7 @@ import { authActions } from '@/store/reducers/auth/authSlice';
 import { useRouter } from 'next/router';
 import { signOut } from 'firebase/auth';
 import { auth } from 'firebase.config';
+import { useTranslation } from 'next-i18next';
 
 interface IProps {
   isBurger: boolean;
@@ -16,6 +17,7 @@ interface IProps {
 }
 
 const HeaderMenu = (props: IProps) => {
+  const { t } = useTranslation();
   const { kindOfForm, id, login } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
   const router = useRouter();
@@ -71,22 +73,20 @@ const HeaderMenu = (props: IProps) => {
           <Button
             name="signin"
             variant="contained"
-            className={`font-SourceSansPro font-semibold text-white leading-5 h-[28px] normal-case text-[14px] hover:bg-color-dark-blue-hover ${
-              kindOfForm == KindForm.signin ? 'bg-color-dark-blue ' : 'bg-transparent'
-            }`}
+            className={`font-SourceSansPro font-semibold text-white leading-5 h-[28px] normal-case text-[14px] hover:bg-color-dark-blue-hover ${kindOfForm == KindForm.signin ? 'bg-color-dark-blue ' : 'bg-transparent'
+              }`}
             onClick={handleClick}
           >
-            Sign in
+            {t('header.signin')}
           </Button>
           <Button
             name="login"
             variant="contained"
-            className={`font-SourceSansPro font-semibold leading-5text-white hover:bg-color-dark-blue-hover h-[28px] normal-case text-[14px] ${
-              kindOfForm == KindForm.login ? 'bg-color-dark-blue ' : 'bg-transparent'
-            }`}
+            className={`font-SourceSansPro font-semibold leading-5text-white hover:bg-color-dark-blue-hover h-[28px] normal-case text-[14px] ${kindOfForm == KindForm.login ? 'bg-color-dark-blue ' : 'bg-transparent'
+              }`}
             onClick={handleClick}
           >
-            Log in
+            {t('header.login')}
           </Button>
         </>
       )}
