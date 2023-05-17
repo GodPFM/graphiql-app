@@ -45,9 +45,7 @@ export default function LangSwitch() {
   const handleLang = () => {
     localeRef.current = localeRef.current === 'en' ? 'ru' : 'en';
     i18n.changeLanguage(localeRef.current);
-    setTimeout(() => {
-      router.push(router.pathname, router.asPath, { locale: localeRef.current });
-    }, 300);
+    router.push(router.pathname, router.asPath, { locale: localeRef.current });
   };
 
   return <StyledSwitch checked={localeRef.current === 'en'} onClick={handleLang} />;
