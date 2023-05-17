@@ -6,14 +6,12 @@ import { wrapper } from '../store/store';
 import { addSchema } from '../store/reducers/document/slice';
 import { ROOT_QUERY } from '../queries/introspectionQuery';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { selectLanguage } from '@/store/reducers/language/slice';
 
 const Graphql = () => {
   const { id, isLoading } = useAppSelector((state) => state.auth);
-  const { language } = useAppSelector(selectLanguage);
   const router = useRouter();
   useEffect(() => {
-    if (!isLoading && !id) router.push(`/${language}/`, `/${language}/`, { locale: language });
+    if (!isLoading && !id) router.push(`/`, `/`, { locale: router.locale });
   }, [isLoading, id]);
   return <>{id ? <Columns /> : <></>}</>;
 };

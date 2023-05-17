@@ -1,9 +1,7 @@
 import { styled } from '@mui/material/styles';
 import { Switch } from '@mui/material';
 import { useTranslation } from 'next-i18next';
-import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { selectLanguage, setAppLanguage } from '@/store/reducers/language/slice';
-import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 
 const StyledSwitch = styled(Switch)(({ theme }) => ({
   padding: 8,
@@ -38,17 +36,13 @@ const StyledSwitch = styled(Switch)(({ theme }) => ({
 }));
 
 export default function LangSwitch() {
-  const dispatch = useAppDispatch();
-  const { language } = useAppSelector(selectLanguage);
+  const router = useRouter();
   const { i18n } = useTranslation();
 
   const handleLang = () => {
-    dispatch(setAppLanguage(language === 'en' ? 'ru' : 'en'));
+    i18n.changeLanguage(router.locale === 'en' ? 'ru' : 'en');
+    router.push(router.pathname, router.asPath, { locale: router.locale === 'en' ? 'ru' : 'en' });
   };
 
-  useEffect(() => {
-    i18n.changeLanguage(language);
-  }, [language]);
-
-  return <StyledSwitch defaultChecked onClick={handleLang} />;
+  return <StyledSwitch checked={router.locale === 'en'} onClick={handleLang} />;
 }
