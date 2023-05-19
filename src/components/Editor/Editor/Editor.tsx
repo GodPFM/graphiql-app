@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '@/hooks/redux';
 import { ISelectionData } from '@/types/editorTypes';
 import { ITab, updateActiveTab } from '@/store/reducers/editorTabs/slice';
+import { syntaxHighlighting } from '@/utils/syntaxHighlighting';
 
 interface IProps {
   isRequest: boolean;
@@ -634,9 +635,8 @@ export function Editor(props: IProps) {
         {code.map((item, index) => (
           <div
             key={index + 10}
-            className={`leading-5 font-SourceCodePro text-center min-w-[20px] select-none ${
-              index === activeLine ? 'text-color-code-active' : 'text-color-code'
-            }`}
+            className={`leading-5 font-SourceCodePro text-center min-w-[20px] select-none ${index === activeLine ? 'text-color-code-active' : 'text-color-code'
+              }`}
           >
             {index + 1}
           </div>
@@ -659,16 +659,20 @@ export function Editor(props: IProps) {
             onClick={clickNavigation}
           >
             {item.map((element, indexLetter) => (
-              <span key={indexLetter} data-letter={indexLetter} data-line={index}>
+              <span
+                className={syntaxHighlighting(item, index, element)}
+                key={indexLetter}
+                data-letter={indexLetter}
+                data-line={index}
+              >
                 {element}
               </span>
             ))}
           </div>
         ))}
         <div
-          className={`absolute h-[24px] w-[2px] bg-black select-none animate-blink-cursor ${
-            isFocus ? 'visible' : 'hidden'
-          }`}
+          className={`absolute h-[24px] w-[2px] bg-black select-none animate-blink-cursor ${isFocus ? 'visible' : 'hidden'
+            }`}
           style={{ top: `${height}px`, left: `${left}px` }}
         />
       </div>
