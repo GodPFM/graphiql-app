@@ -1,4 +1,4 @@
-import { MouseEvent, useEffect } from 'react';
+import { MouseEvent, useEffect, useState } from 'react';
 import { Typography, Stack } from '@mui/material';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
@@ -34,6 +34,11 @@ const Fields = () => {
     };
     dispatch(addNavItem(navObj));
     dispatch(setArgs(fields[index].args));
+    // тут при клике на поле делать запрос на доступные поля для данного типа getType(fields[index].type)
+    const currentType: string = getType(fields[index].type);
+    getData({
+      query: getTypeFields(currentType),
+    });
     dispatch(setFields([]));
   };
 
@@ -68,7 +73,6 @@ const Fields = () => {
     if (isSuccess && data.data.__type.fields !== null) {
       dispatch(addSchema(data));
       dispatch(setFields(data.data.__type.fields));
-      dispatch(setArgs([]));
     }
   }, [data]);
 
