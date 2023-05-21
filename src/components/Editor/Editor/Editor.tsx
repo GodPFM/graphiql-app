@@ -630,7 +630,7 @@ export function Editor(props: IProps) {
     }
   };
   return (
-    <div className="flex h-full h-[65vh] overflow-auto">
+    <div className="flex  h-[50vh] overflow-auto">
       <div className="text-black pr-3">
         {code.map((item, index) => (
           <div
