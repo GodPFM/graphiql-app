@@ -1,5 +1,4 @@
 import { useAppDispatch, useAppSelector } from '@/hooks/redux';
-import { setQueryVariables } from '@/store/reducers/editor/slice';
 import { setVars } from '@/store/reducers/editorTabs/slice';
 import { Accordion, AccordionDetails, AccordionSummary, TextField } from '@mui/material';
 import { useEffect, useState } from 'react';
