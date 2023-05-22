@@ -3,8 +3,8 @@ import { Grid } from '@mui/material';
 import { EditorHeader } from '@/components/Editor/EditorHeader/EditorHeader';
 import { Editor } from '@/components/Editor/Editor/Editor';
 import { Response } from '@/components/Response/Response';
-import { ResponseHeader } from '@/components/ResponseHeader/ResponseHeader';
 import EditorVars from '../EditorVars/EditorVars';
+import { ResponseHeader } from '@/components/ResponseHeader/ResponseHeader';
 
 export function EditorContainer() {
   return (
