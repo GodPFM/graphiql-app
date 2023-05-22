@@ -4,6 +4,7 @@ import { EditorHeader } from '@/components/Editor/EditorHeader/EditorHeader';
 import { Editor } from '@/components/Editor/Editor/Editor';
 import { Response } from '@/components/Response/Response';
 import EditorVars from '../EditorVars/EditorVars';
+import { ResponseHeader } from '@/components/ResponseHeader/ResponseHeader';
 
 export function EditorContainer() {
   return (
@@ -21,14 +22,18 @@ export function EditorContainer() {
           <div className="flex mt-[10px] h-[80vh] grow bg-white rounded-lg flex-col justify-between">
             <div className="p-8 ">
               <EditorHeader />
-              <Editor isRequest={true} />
+              <Editor />
             </div>
             <EditorVars />
           </div>
         </Grid>
-
         <Grid item md={6} xs={12}>
-          <Response />
+          <div className="flex mt-[8px]">
+            <div className="p-8 grow text-black font-SourceSansPro">
+              <ResponseHeader />
+              <Response />
+            </div>
+          </div>
         </Grid>
       </Grid>
     </div>
