@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from '@/hooks/redux';
 import { setQueryVariables } from '@/store/reducers/editor/slice';
-import { TextField } from '@mui/material';
+import { Accordion, AccordionDetails, AccordionSummary, TextField } from '@mui/material';
 
 const EditorVars = () => {
   const { variables } = useAppSelector((state) => state.editor);
@@ -9,14 +9,12 @@ const EditorVars = () => {
     dispatch(setQueryVariables(e.target.value));
   };
   return (
-    <TextField
-      onChange={handleChange}
-      fullWidth
-      label="Variables"
-      multiline
-      rows={4}
-      value={variables}
-    />
+    <Accordion>
+      <AccordionSummary>Variables</AccordionSummary>
+      <AccordionDetails>
+        <TextField onChange={handleChange} fullWidth multiline rows={4} value={variables} />
+      </AccordionDetails>
+    </Accordion>
   );
 };
 export default EditorVars;

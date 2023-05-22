@@ -18,12 +18,12 @@ export function EditorContainer() {
         spacing={1}
       >
         <Grid item md={6} xs={12}>
-          <div className="flex mt-[10px] min-h-[50vh] bg-white rounded-lg">
-            <div className="p-8 grow">
+          <div className="flex mt-[10px] h-[80vh] grow bg-white rounded-lg flex-col justify-between">
+            <div className="p-8 ">
               <EditorHeader />
               <Editor isRequest={true} />
-              <EditorVars />
             </div>
+            <EditorVars />
           </div>
         </Grid>
 
