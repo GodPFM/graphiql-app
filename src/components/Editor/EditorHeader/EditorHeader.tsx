@@ -2,12 +2,12 @@ import { Button } from '@mui/material';
 import PlayArrowOutlinedIcon from '@mui/icons-material/PlayArrowOutlined';
 import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { setQueryBody } from '@/store/reducers/editor/slice';
+import { setQuery, setQueryBody } from '@/store/reducers/editor/slice';
 import { joinTextFromArr } from '@/utils/textFotmatter';
 
 export const EditorHeader = () => {
   const { activeTabId, tabs } = useAppSelector((state) => state.editorTab);
-
+  const [editorTabName, setEditorTabName] = useState('ExampleQuery');
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -19,10 +19,9 @@ export const EditorHeader = () => {
   const handleClick = () => {
     const tabInfo = tabs.find((item) => item.id == activeTabId);
     if (tabInfo) {
-      console.log(tabInfo);
       const requestCode = joinTextFromArr(tabInfo.requestCode);
 
-      dispatch(setQueryBody(requestCode));
+      dispatch(setQuery({ query: requestCode, variables: tabInfo.variablesCode }));
     }
   };
   return (
