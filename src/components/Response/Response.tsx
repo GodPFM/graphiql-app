@@ -3,10 +3,9 @@ import { useAppDispatch, useAppSelector } from '@/hooks/redux';
 import { selectEditor } from '@/store/reducers/editor/slice';
 import { useGetDataMutation } from '@/store/api';
 import { updateActiveTab } from '@/store/reducers/editorTabs/slice';
+import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 
 export const Response = () => {
-  // берем из слайса сформированный query, variables, headers в редакторе
-  // либо уже готвый ответ, зависит от реализации
   const { activeTabId, tabs } = useAppSelector((state) => state.editorTab);
   const [previousActiveTabId, setPreviousActiveTabId] = useState<number | undefined>(activeTabId);
   const dispatch = useAppDispatch();
@@ -14,7 +13,7 @@ export const Response = () => {
     body: { query, variables },
   } = useAppSelector(selectEditor);
   const [response, setResponse] = useState<string | undefined>();
-  const [getResp, { data, isSuccess, isLoading, isError }] = useGetDataMutation();
+  const [getResp, { data, isSuccess, isLoading, isError, error }] = useGetDataMutation();
 
   useLayoutEffect(() => {
     if (query !== '') {
@@ -29,7 +28,6 @@ export const Response = () => {
     }
     if (tabInfo.length === 1 && tabInfo[0]) {
       if (tabInfo[0].responseCode) {
-        console.log(tabInfo[0].responseCode);
         setResponse(tabInfo[0].responseCode);
       } else {
         setResponse(undefined);
@@ -61,11 +59,15 @@ export const Response = () => {
     <div className="font-SourceCodePro text-color-documentation-primary">
       {isLoading && activeTabId === previousActiveTabId && <div>skeleton loading</div>}
       {isSuccess && (
-        <pre className="break-all font-SourceCodePro whitespace-pre-wrap h-[65vh] overflow-auto">
+        <pre className="break-all font-SourceCodePro whitespace-pre-wrap h-[60vh] overflow-auto">
           {response ? response : ''}
         </pre>
       )}
-      {isError && activeTabId === previousActiveTabId && <>Error</>}
+      {isError && (
+        <pre className="break-all font-SourceCodePro whitespace-pre-wrap h-[60vh] overflow-auto">
+          {JSON.stringify((error as FetchBaseQueryError).data, null, '  ')}
+        </pre>
+      )}
     </div>
   );
 };
