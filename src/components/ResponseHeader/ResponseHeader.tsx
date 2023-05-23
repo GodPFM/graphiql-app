@@ -21,10 +21,8 @@ export function ResponseHeader() {
 
   const getData = () => {
     const tabInfo = tabs.filter((item) => item.id == activeTabId);
-    console.log(tabInfo);
     if (tabInfo && tabInfo.length && tabInfo[0] && tabInfo[0].responseCode) {
       const responseData = tabInfo[0].responseCode;
-      console.log(responseData);
       const obj = {
         time: responseData.time,
         size: responseData.size,
@@ -51,11 +49,10 @@ export function ResponseHeader() {
           <div className={'w-full flex justify-between items-center text-xs font-SourceSansPro'}>
             <span>{t('graphql_page.editor.status')}</span>
             <span
-              className={`${
-                responseData.status / 400 >= 1
-                  ? 'text-color-text-bright-red'
-                  : 'text-color-text-green'
-              }`}
+              className={`${responseData.status / 400 >= 1
+                ? 'text-color-text-bright-red'
+                : 'text-color-text-green'
+                }`}
             >
               {responseData.status}
             </span>
