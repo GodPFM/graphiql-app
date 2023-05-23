@@ -10,13 +10,15 @@ export const Response = () => {
   const { activeTabId, tabs } = useAppSelector((state) => state.editorTab);
   const [previousActiveTabId, setPreviousActiveTabId] = useState<number | undefined>(activeTabId);
   const dispatch = useAppDispatch();
-  const { query, variables } = useAppSelector(selectEditor);
+  const {
+    body: { query, variables },
+  } = useAppSelector(selectEditor);
   const [response, setResponse] = useState<string | undefined>();
   const [getResp, { data, isSuccess, isLoading, isError }] = useGetDataMutation();
 
   useLayoutEffect(() => {
     if (query !== '') {
-      getResp({ query, variables: variables ? variables : undefined });
+      getResp({ body: { query, variables: variables ? variables : undefined } });
     }
   }, [query]);
 
