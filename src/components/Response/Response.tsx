@@ -27,6 +27,7 @@ export const Response = () => {
     }
     if (tabInfo.length === 1 && tabInfo[0]) {
       if (tabInfo[0].responseCode) {
+        console.log(tabInfo[0].responseCode);
         setResponse(tabInfo[0].responseCode);
       } else {
         setResponse(undefined);
