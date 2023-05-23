@@ -49,10 +49,11 @@ export function ResponseHeader() {
           <div className={'w-full flex justify-between items-center text-xs font-SourceSansPro'}>
             <span>{t('graphql_page.editor.status')}</span>
             <span
-              className={`${responseData.status / 400 >= 1
-                ? 'text-color-text-bright-red'
-                : 'text-color-text-green'
-                }`}
+              className={`${
+                responseData.status / 400 >= 1
+                  ? 'text-color-text-bright-red'
+                  : 'text-color-text-green'
+              }`}
             >
               {responseData.status}
             </span>
