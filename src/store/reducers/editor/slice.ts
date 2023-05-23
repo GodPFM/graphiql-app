@@ -37,7 +37,10 @@ export const editorSlice = createSlice({
     },
 
     setHeaders: (state, { payload }: PayloadAction<PayloadParams>) => {
-      state.headers = payload.headers;
+      state.headers = {
+        'Content-Type': 'application/json',
+        ...payload.headers,
+      };
     },
   },
 });
