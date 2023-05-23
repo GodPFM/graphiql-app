@@ -2,21 +2,29 @@ import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '@/hooks/redux';
 import { selectEditor } from '@/store/reducers/editor/slice';
 import { useGetDataMutation } from '@/store/api';
-import { updateActiveTab } from '@/store/reducers/editorTabs/slice';
+import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
+import { IResponse, updateActiveTab } from '@/store/reducers/editorTabs/slice';
+import { isFetchBaseQueryError } from '@/utils/helpers';
+import { ResponseButtons } from '@/components/Response/ResponseButtons/ResponseButtons';
 
 export const Response = () => {
-  // берем из слайса сформированный query, variables, headers в редакторе
-  // либо уже готвый ответ, зависит от реализации
   const { activeTabId, tabs } = useAppSelector((state) => state.editorTab);
   const [previousActiveTabId, setPreviousActiveTabId] = useState<number | undefined>(activeTabId);
   const dispatch = useAppDispatch();
-  const { query, variables } = useAppSelector(selectEditor);
+  const [requestTimeStart, setRequestTimeStart] = useState(0);
+  const {
+    body: { query, variables },
+  } = useAppSelector(selectEditor);
   const [response, setResponse] = useState<string | undefined>();
-  const [getResp, { data, isSuccess, isLoading, isError }] = useGetDataMutation();
+  const [getResp, { data, isSuccess, isLoading, isError, error }] = useGetDataMutation({
+    fixedCacheKey: 'LoadData',
+  });
 
   useLayoutEffect(() => {
     if (query !== '') {
-      getResp({ query, variables: variables ? variables : undefined });
+      const timeNow = Date.now();
+      setRequestTimeStart(timeNow);
+      getResp({ body: { query, variables: variables ? variables : undefined } });
     }
   }, [query]);
 
@@ -27,7 +35,7 @@ export const Response = () => {
     }
     if (tabInfo.length === 1 && tabInfo[0]) {
       if (tabInfo[0].responseCode) {
-        setResponse(tabInfo[0].responseCode);
+        setResponse(tabInfo[0].responseCode.response);
       } else {
         setResponse(undefined);
       }
@@ -44,25 +52,55 @@ export const Response = () => {
     }
   }, [isLoading]);
 
-  useEffect(() => {
-    const stringData = JSON.stringify(data, null, '  ');
-    if (previousActiveTabId === activeTabId) {
-      setResponse(stringData);
+  const prepareData = (stringData: string) => {
+    const time = Date.now() - requestTimeStart;
+    const size = new TextEncoder().encode(stringData).length;
+    let status = isSuccess ? 200 : 400;
+
+    if (isFetchBaseQueryError(error)) {
+      status = error.status as number;
     }
-    dispatch(
-      updateActiveTab({ code: stringData, isRequest: false, activeId: previousActiveTabId })
-    );
+    if (stringData && time && size && status) {
+      if (previousActiveTabId === activeTabId && stringData) {
+        setResponse(stringData);
+      }
+      const responseData: IResponse = {
+        time,
+        size,
+        status,
+        response: stringData,
+      };
+      dispatch(
+        updateActiveTab({ code: responseData, isRequest: false, activeId: previousActiveTabId })
+      );
+    }
+  };
+
+  useEffect(() => {
+    prepareData(JSON.stringify(error, null, '  '));
+  }, [error]);
+
+  useEffect(() => {
+    prepareData(JSON.stringify(data, null, '  '));
   }, [data]);
 
   return (
     <div className="font-SourceCodePro text-color-documentation-primary">
-      {isLoading && activeTabId === previousActiveTabId && <div>skeleton loading</div>}
-      {isSuccess && (
-        <pre className="break-all font-SourceCodePro whitespace-pre-wrap h-[65vh] overflow-auto">
-          {response ? response : ''}
-        </pre>
+      {response && response.length && (
+        <div className="relative">
+          <ResponseButtons response={response} />
+          {isSuccess && (
+            <pre className="break-all font-SourceCodePro whitespace-pre-wrap h-[60vh] overflow-auto">
+              {response ? response : ''}
+            </pre>
+          )}
+          {isError && (
+            <pre className="break-all font-SourceCodePro whitespace-pre-wrap h-[60vh] overflow-auto">
+              {JSON.stringify((error as FetchBaseQueryError).data, null, '  ')}
+            </pre>
+          )}
+        </div>
       )}
-      {isError && activeTabId === previousActiveTabId && <>Error</>}
     </div>
   );
 };

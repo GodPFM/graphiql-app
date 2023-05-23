@@ -57,8 +57,8 @@ export function Editor() {
   const clickNavigation = (e: React.MouseEvent) => {
     e.stopPropagation();
     const line = e.currentTarget.getAttribute('data-line');
-    // @ts-ignore
-    const word = e.target?.getAttribute('data-letter');
+    const target = e.target as HTMLElement;
+    const word = Number(target?.getAttribute('data-letter'));
     const position = window.getSelection()?.focusOffset;
     if (line) {
       setActiveLine(Number(line));
@@ -622,7 +622,7 @@ export function Editor() {
     }
   };
   return (
-    <div className="flex h-[65vh] overflow-auto">
+    <div className="flex overflow-auto">
       <div className="text-black pr-3">
         {code.map((item, index) => (
           <div
@@ -637,7 +637,7 @@ export function Editor() {
       </div>
       <div
         tabIndex={0}
-        className="text-black max-w-full min-h-[500px] h-full grow relative font-SourceCodePro leading-5 outline-0 cursor-text"
+        className="text-black max-w-full  h-full grow relative font-SourceCodePro leading-5 outline-0 cursor-text"
         onFocus={focusEvent}
         onBlur={blurEvent}
         onKeyDown={inputEvent}

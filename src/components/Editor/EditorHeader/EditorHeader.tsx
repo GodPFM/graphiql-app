@@ -4,9 +4,11 @@ import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { setQuery } from '@/store/reducers/editor/slice';
 import { joinTextFromArr } from '@/utils/textFotmatter';
+import { useTranslation } from 'react-i18next';
 
 export const EditorHeader = () => {
   const { activeTabId, tabs } = useAppSelector((state) => state.editorTab);
+  const { t } = useTranslation();
   const [editorTabName, setEditorTabName] = useState('ExampleQuery');
   const dispatch = useAppDispatch();
 
@@ -19,15 +21,13 @@ export const EditorHeader = () => {
   const handleClick = () => {
     const tabInfo = tabs.find((item) => item.id == activeTabId);
     if (tabInfo) {
-      console.log(tabInfo);
       const requestCode = joinTextFromArr(tabInfo.requestCode);
-      console.log(requestCode);
-      dispatch(setQuery({ query: requestCode, variables: '' }));
+      dispatch(setQuery({ body: { query: requestCode, variables: tabInfo.variablesCode } }));
     }
   };
   return (
     <div className="flex font-SourceSansPro justify-between select-none">
-      <h3 className="text-black m-0 p-0">Operation</h3>
+      <h3 className="text-black m-0 p-0">{t('graphql_page.editor.operation')}</h3>
       <Button
         sx={{
           height: '28px',
