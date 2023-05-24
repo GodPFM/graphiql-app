@@ -14,14 +14,13 @@ import {
 import { useGetDataMutation } from '@/store/api';
 import { getTypeFields } from '@/queries/getTypeFields';
 import { OfType, NavObj } from '@/types/schema-types';
-import { DocumentSkeleton } from '../deprecated_Skeleton/Skeleton';
+import { DocumentSkeleton } from '../InfoBlock/Skeleton/Skeleton';
 
 function getType(node: OfType): string {
   return node.name ? node.name : getType(node.ofType);
 }
 
 const Fields = () => {
-
   const dispatch = useAppDispatch();
   const [getData, { data, isSuccess, isLoading }] = useGetDataMutation();
 

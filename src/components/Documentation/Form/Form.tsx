@@ -6,7 +6,7 @@ import { selectDocument, setNewLink } from '@/store/reducers/document/slice';
 import { useGetDataMutation } from '@/store/api';
 import { getIntrospectionQuery } from '@/queries/newTestIntrospectionQuery';
 
-const From = () => {
+const Form = () => {
   const { link } = useAppSelector(selectDocument);
   const [value, setValue] = useState(link);
   const dispatch = useAppDispatch();
@@ -55,4 +55,4 @@ const From = () => {
   );
 };
 
-export default From;
+export default Form;

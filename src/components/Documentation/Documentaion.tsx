@@ -1,7 +1,7 @@
 import { Typography } from '@mui/material';
 
 import { useTranslation } from 'react-i18next';
-import From from './Form/From';
+import Form from './Form/Form';
 import InfoBlock from './InfoBlock/InfoBlock';
 
 const Documentaion = () => {
@@ -18,9 +18,9 @@ const Documentaion = () => {
         fontSize={18}
         className="border-color-heading-border text-color-documentation-primary"
       >
-        {t('graphql_page.docs')}
+        {t('graphql_page.docs.title')}
       </Typography>
-      <From />
+      <Form />
       <InfoBlock />
     </>
   );

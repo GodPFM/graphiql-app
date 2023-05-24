@@ -8,7 +8,7 @@ import { useGetDataMutation } from '@/store/api';
 import { addSchema, selectDocument, setFields, setArgs } from '@/store/reducers/document/slice';
 import { OfType } from '@/types/schema-types';
 import { getTypeFields } from '@/queries/getTypeFields';
-import { DocumentSkeleton } from '../deprecated_Skeleton/Skeleton';
+import { DocumentSkeleton } from '../InfoBlock/Skeleton/Skeleton';
 
 function getType(node: OfType): string {
   return node.name ? node.name : getType(node.ofType);
