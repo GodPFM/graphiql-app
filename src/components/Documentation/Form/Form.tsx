@@ -2,12 +2,12 @@ import { useState } from 'react';
 import { TextField, Button } from '@mui/material';
 
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { selectDocument, setNewLink } from '@/store/reducers/document/slice';
+import { selectDocument, setFirstLoad, setNewLink } from '@/store/reducers/document/slice';
 import { useGetDataMutation } from '@/store/api';
 import { getIntrospectionQuery } from '@/queries/newTestIntrospectionQuery';
 
 const Form = () => {
-  const { link } = useAppSelector(selectDocument);
+  const { link, firstLoad } = useAppSelector(selectDocument);
   const [value, setValue] = useState(link);
   const dispatch = useAppDispatch();
   const [getData] = useGetDataMutation({
@@ -16,13 +16,14 @@ const Form = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (link !== value) {
+    if (link !== value || firstLoad) {
       dispatch(setNewLink(value));
       getData({
         body: {
           query: getIntrospectionQuery(),
         },
       });
+      dispatch(setFirstLoad());
     }
   };
 
@@ -35,7 +36,7 @@ const Form = () => {
       <TextField
         value={value}
         variant="standard"
-        className="font-SourceSansPro text-[1rem] w-full flex-1"
+        className="font-SourceSansPro text-[1rem] max-w-sm w-full flex-1"
         size="small"
         onChange={handleChange}
       />

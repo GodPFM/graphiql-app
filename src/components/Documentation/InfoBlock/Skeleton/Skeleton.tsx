@@ -8,9 +8,8 @@ export const DocumentSkeleton = () => {
         <Skeleton
           key={index}
           variant="rounded"
-          width={300}
           height={20}
-          className="mt-3 ml-auto mr-auto 2xl:ml-0 2xl:mr-0"
+          className="mt-3 ml-auto max-w-sm w-full mr-auto 2xl:ml-0 2xl:mr-0"
         />
       ))}
     </>
