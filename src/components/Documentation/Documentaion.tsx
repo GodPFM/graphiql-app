@@ -1,17 +1,10 @@
 import { Typography } from '@mui/material';
 
-import SchemaNaviagation from './SchemaNavigation/SchemaNaviagation';
-import BackButton from './BackButton/BackButton';
-import Arguments from './Arguments/Arguments';
-import Fields from './Fields/Fields';
-import Root from './Root/Root';
-
-import { useAppSelector } from '@/store/hooks';
-import { selectDocument } from '@/store/reducers/document/slice';
 import { useTranslation } from 'react-i18next';
+import From from './Form/From';
+import InfoBlock from './InfoBlock/InfoBlock';
 
 const Documentaion = () => {
-  const { isRoot } = useAppSelector(selectDocument);
   const { t } = useTranslation();
 
   return (
@@ -27,16 +20,8 @@ const Documentaion = () => {
       >
         {t('graphql_page.docs')}
       </Typography>
-      {isRoot ? (
-        <Root />
-      ) : (
-        <div className="pr-4">
-          <SchemaNaviagation />
-          <BackButton />
-          <Arguments />
-          <Fields />
-        </div>
-      )}
+      <From />
+      <InfoBlock />
     </>
   );
 };

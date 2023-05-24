@@ -6,7 +6,6 @@ import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 import { IResponse, updateActiveTab } from '@/store/reducers/editorTabs/slice';
 import { isFetchBaseQueryError } from '@/utils/helpers';
 import { ResponseButtons } from '@/components/Response/ResponseButtons/ResponseButtons';
-import { getIntrospectionQuery } from '@/queries/newTestIntrospectionQuery';
 
 export const Response = () => {
   const { activeTabId, tabs } = useAppSelector((state) => state.editorTab);
@@ -25,9 +24,8 @@ export const Response = () => {
     if (query !== '') {
       const timeNow = Date.now();
       setRequestTimeStart(timeNow);
-      // убрать getIntrospectionQuery(), когда отладишь документацию
       getResp({
-        body: { query: getIntrospectionQuery(), variables: variables ? variables : undefined },
+        body: { query, variables: variables ? variables : undefined },
       });
     }
   }, [query]);
@@ -85,8 +83,6 @@ export const Response = () => {
   }, [error]);
 
   useEffect(() => {
-    // убрать console.log(data);, когда отладишь документацию
-    console.log(data);
     prepareData(JSON.stringify(data, null, '  '));
   }, [data]);
 

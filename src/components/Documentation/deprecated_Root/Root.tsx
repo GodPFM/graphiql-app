@@ -15,7 +15,7 @@ import {
 
 import { useGetDataMutation } from '@/store/api';
 import { getRootListQuery } from '@/queries/getRootQuery';
-import { DocumentSkeleton } from '@/components/Documentation/Skeleton/Skeleton';
+import { DocumentSkeleton } from '@/components/Documentation/deprecated_Skeleton/Skeleton';
 import { NavObj } from '@/types/schema-types';
 
 const Root = () => {

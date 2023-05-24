@@ -14,14 +14,14 @@ import {
 import { useGetDataMutation } from '@/store/api';
 import { getTypeFields } from '@/queries/getTypeFields';
 import { OfType, NavObj } from '@/types/schema-types';
-import { DocumentSkeleton } from '../Skeleton/Skeleton';
+import { DocumentSkeleton } from '../deprecated_Skeleton/Skeleton';
 
 function getType(node: OfType): string {
   return node.name ? node.name : getType(node.ofType);
 }
 
 const Fields = () => {
-  const { fields, args, schema } = useAppSelector(selectDocument);
+
   const dispatch = useAppDispatch();
   const [getData, { data, isSuccess, isLoading }] = useGetDataMutation();
 
@@ -36,7 +36,9 @@ const Fields = () => {
     dispatch(setArgs(fields[index].args));
     const currentType: string = getType(fields[index].type);
     getData({
-      query: getTypeFields(currentType),
+      body: {
+        query: getTypeFields(currentType),
+      },
     });
     dispatch(setFields([]));
   };
