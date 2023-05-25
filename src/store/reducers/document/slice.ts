@@ -52,8 +52,10 @@ export const documentSlice = createSlice({
         state.currentType = state.navigationStack[state.navigationStack.length - 1];
       }
     },
-    addNavItem: (state, action: PayloadAction<string>) => {
-      state.navigationStack.push(action.payload);
+    resetNav: (state) => {
+      state.isRoot = true;
+      state.currentType = '';
+      state.navigationStack = ['Root'];
     },
   },
 });
@@ -67,7 +69,7 @@ export const {
   setCurrentType,
   setRoot,
   backNavigation,
-  addNavItem,
+  resetNav,
 } = documentSlice.actions;
 
 export default documentSlice.reducer;

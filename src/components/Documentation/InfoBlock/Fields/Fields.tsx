@@ -4,8 +4,8 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 import { IntrospectionInputValue, IntrospectionQuery } from '@/types/intorspectionTypes';
 
-import { useAppSelector } from '@/store/hooks';
-import { selectDocument } from '@/store/reducers/document/slice';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { selectDocument, setCurrentType } from '@/store/reducers/document/slice';
 
 import { parser } from '@/utils/document/parser';
 import { OfType, ResultType, getType } from '@/utils/document/getType';
@@ -18,11 +18,20 @@ interface FieldInterface {
 
 const Fields = () => {
   const { currentType, schema } = useAppSelector(selectDocument);
+  const dispatch = useAppDispatch();
   const currentSchema: IntrospectionQuery = schema as IntrospectionQuery;
   let fieldsData: FieldInterface[] = [];
   if (currentType) {
     fieldsData = parser(currentType, currentSchema) as FieldInterface[];
   }
+
+  const handleClick = (kind: string, typeName: string) => {
+    console.log(kind, typeName);
+    if (kind === 'OBJECT') {
+      dispatch(setCurrentType(typeName));
+    }
+  };
+
   return currentType ? (
     <>
       <Stack direction="row" className="mb-2 mt-4">
@@ -38,6 +47,7 @@ const Fields = () => {
         return (
           <Stack key={field.name} direction="row" alignItems="center">
             <button
+              onClick={() => handleClick(field.type.kind, field.type.listOf)}
               className={`flex items-center hover:bg-white rounded group px-3 w-full bg-transparent border-0 mt-2`}
             >
               <Typography fontFamily={'Source Code Pro'} className="text-[14px] mr-2">
@@ -76,42 +86,3 @@ const Fields = () => {
 };
 
 export default Fields;
-
-{
-  /* <div className="text-[14px] flex ml-2 flex-col">
-  <div className="text-left">
-    {field.args.map((arg, index) => (
-      <div key={arg.name}>{index === 0 ? `( ${arg.name}` : arg.name}</div>
-    ))}
-  </div>
-  <div>{')'}</div>
-</div> */
-}
-
-{
-  /* <button
-  // onClick={() => handleField(index)}
-  className={`flex items-center hover:bg-white rounded group px-3 w-full bg-transparent border-0`}
->
-  <Typography fontFamily={'Source Code Pro'} className="text-[14px]">
-    {`${field.name} `}
-  </Typography>
-  <Typography fontFamily={'Source Code Pro'} className="text-[14px] flex flex-col">
-    {field.args.map((arg) => {
-      console.log(arg.name);
-      return <div key={arg.name}>{arg.name}</div>;
-    })}
-  </Typography>
-  <Typography
-    // onClick={(e: MouseEvent) => {
-    //   // e.stopPropagation();
-    //   // handleType(index);
-    // }}
-    fontFamily={'Source Code Pro'}
-    className="ml-2 text-[14px] text-color-documentation-secondary hover:underline"
-  >
-    {`: ${field.type.text}`}
-  </Typography>
-  <ArrowForwardIcon className="w-3 h-3 ml-auto fill-none group-hover:fill-color-documentation-primary" />
-</button> */
-}

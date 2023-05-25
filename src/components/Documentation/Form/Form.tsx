@@ -2,7 +2,12 @@ import { useState } from 'react';
 import { TextField, Button } from '@mui/material';
 
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { selectDocument, setFirstLoad, setNewLink } from '@/store/reducers/document/slice';
+import {
+  selectDocument,
+  setFirstLoad,
+  setNewLink,
+  resetNav,
+} from '@/store/reducers/document/slice';
 import { useGetDataMutation } from '@/store/api';
 import { getIntrospectionQuery } from '@/queries/newTestIntrospectionQuery';
 
@@ -24,6 +29,7 @@ const Form = () => {
         },
       });
       dispatch(setFirstLoad());
+      dispatch(resetNav());
     }
   };
 

@@ -17,7 +17,7 @@ const BackButton = () => {
       onClick={handleBack}
       className="h-6 flex items-center justify-center mr-3 hover:bg-white duration-300 rounded group bg-transparent border-0"
     >
-      <ArrowBackIcon className="w-5 h-5 fill-color-documentation-secondary group-hover:fill-color-documentation-primary mr-2 ml-2" />
+      <ArrowBackIcon className="w-5 h-5 fill-color-documentation-secondary group-hover:fill-color-documentation-primary mr-2" />
       <Typography
         fontFamily={'Source Sans Pro'}
         component="h4"
