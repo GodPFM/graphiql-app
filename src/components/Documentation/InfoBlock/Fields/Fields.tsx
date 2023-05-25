@@ -56,8 +56,9 @@ const Fields = () => {
               {field.args.length > 0 ? (
                 <>
                   {field.args.length === 1 ? (
-                    <div className="text-color-documentation-secondary font-SourceCodePro text-[12px]">{`(${field.args[0].name
-                      }: ${getType(field.args[0].type as OfType).text}): ${field.type.text}`}</div>
+                    <div className="text-color-documentation-secondary font-SourceCodePro text-[12px]">{`(${
+                      field.args[0].name
+                    }: ${getType(field.args[0].type as OfType).text}): ${field.type.text}`}</div>
                   ) : (
                     <div className="text-[12px] flex ml-2 flex-col text-left text-color-documentation-secondary font-SourceCodePro">
                       {field.args.map((arg, index) => (
@@ -65,9 +66,10 @@ const Fields = () => {
                           {index === 0
                             ? `(${arg.name}: ${getType(arg.type as OfType).text}`
                             : index === field.args.length - 1
-                              ? `${arg.name}: ${getType(arg.type as OfType).text}): ${field.type.text
+                            ? `${arg.name}: ${getType(arg.type as OfType).text}): ${
+                                field.type.text
                               }`
-                              : `${arg.name}: ${getType(arg.type as OfType).text}`}
+                            : `${arg.name}: ${getType(arg.type as OfType).text}`}
                         </div>
                       ))}
                     </div>

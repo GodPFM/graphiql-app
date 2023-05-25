@@ -29,13 +29,13 @@ export function getType(type?: OfType): ResultType {
 
   return list
     ? {
-      text: `[${result}]`,
-      listOf: result,
-      kind,
-    }
+        text: `[${result}]`,
+        listOf: result,
+        kind,
+      }
     : {
-      text: result,
-      listOf: result,
-      kind,
-    };
+        text: result,
+        listOf: result,
+        kind,
+      };
 }
