@@ -1,18 +1,23 @@
 import React, { useEffect } from 'react';
 
+import { setSchema } from '@/store/reducers/document/slice';
 import { useGetDataMutation } from '@/store/api';
+import { useAppDispatch } from '@/store/hooks';
+
 import Error from './Error/Error';
 import { DocumentSkeleton } from './Skeleton/Skeleton';
 import Root from './Root/Root';
+import Fields from './Fields/Fields';
 
 const InfoBlock = () => {
   const [getData, { data, isSuccess, isLoading }] = useGetDataMutation({
     fixedCacheKey: 'Introspection',
   });
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (isSuccess) {
-      console.log(data);
+      dispatch(setSchema(data));
     }
   }, [data]);
 
@@ -23,6 +28,7 @@ const InfoBlock = () => {
       {isSuccess ? (
         <div className="mt-3 ml-auto mr-auto max-w-sm w-full 2xl:ml-0 2xl:mr-0">
           <Root />
+          <Fields />
         </div>
       ) : (
         <Error />

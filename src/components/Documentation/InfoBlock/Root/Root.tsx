@@ -1,15 +1,24 @@
-import { Typography, Stack } from '@mui/material';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import React from 'react';
+
+import { Typography, Stack } from '@mui/material';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+
 import { useGetDataMutation } from '@/store/api';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { selectDocument, setCurrentType } from '@/store/reducers/document/slice';
 
 const Root = () => {
   const [getData, { data }] = useGetDataMutation({
     fixedCacheKey: 'Introspection',
   });
+  const { isRoot } = useAppSelector(selectDocument);
+  const dispatch = useAppDispatch();
 
-  return (
+  const handleClick = (value: string) => {
+    dispatch(setCurrentType(value));
+  };
+
+  return isRoot ? (
     <>
       <Stack direction="row" className="mb-2 mt-4">
         <Typography
@@ -23,11 +32,8 @@ const Root = () => {
 
       {data.data.__schema.queryType ? (
         <Stack direction="row" alignItems="center">
-          <button className="w-6 h-6 mr-2 my-1 flex items-center justify-center hover:bg-white duration-300 rounded group bg-transparent border-0">
-            <AddCircleOutlineIcon className="w-5 h-5 stroke-1 fill-color-documentation-secondary group-hover:fill-color-documentation-primary" />
-          </button>
           <button
-            // onClick={handleClick}
+            onClick={() => handleClick('Query')}
             className="flex items-center hover:bg-white rounded group px-3 w-full bg-transparent border-0"
           >
             <Typography fontFamily={'Source Code Pro'} className="text-[14px]">
@@ -46,11 +52,8 @@ const Root = () => {
 
       {data.data.__schema.mutationType ? (
         <Stack direction="row" alignItems="center">
-          <button className="w-6 h-6 mr-2 my-1 flex items-center justify-center hover:bg-white duration-300 rounded group bg-transparent border-0">
-            <AddCircleOutlineIcon className="w-5 h-5 stroke-1 fill-color-documentation-secondary group-hover:fill-color-documentation-primary" />
-          </button>
           <button
-            // onClick={handleClick}
+            onClick={() => handleClick('Mutation')}
             className="flex items-center hover:bg-white rounded group px-3 w-full bg-transparent border-0"
           >
             <Typography fontFamily={'Source Code Pro'} className="text-[14px]">
@@ -69,11 +72,8 @@ const Root = () => {
 
       {data.data.__schema.subscriptionType ? (
         <Stack direction="row" alignItems="center">
-          <button className="w-6 h-6 mr-2 my-1 flex items-center justify-center hover:bg-white duration-300 rounded group bg-transparent border-0">
-            <AddCircleOutlineIcon className="w-5 h-5 stroke-1 fill-color-documentation-secondary group-hover:fill-color-documentation-primary" />
-          </button>
           <button
-            // onClick={handleClick}
+            onClick={() => handleClick('Subscription')}
             className="flex items-center hover:bg-white rounded group px-3 w-full bg-transparent border-0"
           >
             <Typography fontFamily={'Source Code Pro'} className="text-[14px]">
@@ -90,7 +90,7 @@ const Root = () => {
         </Stack>
       ) : null}
     </>
-  );
+  ) : null;
 };
 
 export default Root;
