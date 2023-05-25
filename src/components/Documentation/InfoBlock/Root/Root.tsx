@@ -5,7 +5,7 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 import { useGetDataMutation } from '@/store/api';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { selectDocument, setCurrentType } from '@/store/reducers/document/slice';
+import { selectDocument, setCurrentType, setRoot } from '@/store/reducers/document/slice';
 
 const Root = () => {
   const [getData, { data }] = useGetDataMutation({
@@ -16,11 +16,12 @@ const Root = () => {
 
   const handleClick = (value: string) => {
     dispatch(setCurrentType(value));
+    dispatch(setRoot(false));
   };
 
   return isRoot ? (
     <>
-      <Stack direction="row" className="mb-2 mt-4">
+      <Stack direction="row" className="mb-2">
         <Typography
           fontFamily={'Source Sans Pro'}
           component="h4"

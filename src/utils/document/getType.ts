@@ -24,11 +24,11 @@ export function getType(type?: OfType): ResultType {
 
   return list
     ? {
-      text: `[${result}]`,
-      listOf: result,
-    }
+        text: `[${result}]`,
+        listOf: result,
+      }
     : {
-      text: result,
-      listOf: 'not-a-list',
-    };
+        text: result,
+        listOf: 'not-a-list',
+      };
 }

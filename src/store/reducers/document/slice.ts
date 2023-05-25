@@ -8,6 +8,7 @@ interface InitialState {
   isRoot: boolean;
   schema: IntrospectionQuery | null;
   currentType: string;
+  navigationStack: string[];
 }
 
 const initialState: InitialState = {
@@ -16,6 +17,7 @@ const initialState: InitialState = {
   firstLoad: true,
   isRoot: true,
   currentType: '',
+  navigationStack: ['Root'],
 };
 
 export const documentSlice = createSlice({
@@ -35,12 +37,37 @@ export const documentSlice = createSlice({
     },
     setCurrentType: (state, action: PayloadAction<string>) => {
       state.currentType = action.payload;
+      state.navigationStack.push(action.payload);
+    },
+    setRoot: (state, action: PayloadAction<boolean>) => {
+      state.isRoot = action.payload;
+    },
+    backNavigation: (state) => {
+      state.navigationStack.pop();
+      if (state.navigationStack.length === 1) {
+        state.isRoot = true;
+        state.currentType = '';
+        state.navigationStack = ['Root'];
+      } else {
+        state.currentType = state.navigationStack[state.navigationStack.length - 1];
+      }
+    },
+    addNavItem: (state, action: PayloadAction<string>) => {
+      state.navigationStack.push(action.payload);
     },
   },
 });
 
 export const selectDocument = (state: RootState) => state.document;
 
-export const { setNewLink, setFirstLoad, setSchema, setCurrentType } = documentSlice.actions;
+export const {
+  setNewLink,
+  setFirstLoad,
+  setSchema,
+  setCurrentType,
+  setRoot,
+  backNavigation,
+  addNavItem,
+} = documentSlice.actions;
 
 export default documentSlice.reducer;

@@ -8,6 +8,7 @@ import Error from './Error/Error';
 import { DocumentSkeleton } from './Skeleton/Skeleton';
 import Root from './Root/Root';
 import Fields from './Fields/Fields';
+import BackButton from './BackButton/BackButton';
 
 const InfoBlock = () => {
   const [getData, { data, isSuccess, isLoading }] = useGetDataMutation({
@@ -28,6 +29,7 @@ const InfoBlock = () => {
       {isSuccess ? (
         <div className="mt-3 ml-auto mr-auto max-w-sm w-full 2xl:ml-0 2xl:mr-0">
           <Root />
+          <BackButton />
           <Fields />
         </div>
       ) : (

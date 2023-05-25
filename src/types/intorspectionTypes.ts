@@ -97,17 +97,17 @@ export type IntrospectionOutputTypeRef =
   | IntrospectionNamedTypeRef<IntrospectionOutputType>
   | IntrospectionListTypeRef<IntrospectionOutputTypeRef>
   | IntrospectionNonNullTypeRef<
-    | IntrospectionNamedTypeRef<IntrospectionOutputType>
-    | IntrospectionListTypeRef<IntrospectionOutputTypeRef>
-  >;
+      | IntrospectionNamedTypeRef<IntrospectionOutputType>
+      | IntrospectionListTypeRef<IntrospectionOutputTypeRef>
+    >;
 
 export type IntrospectionInputTypeRef =
   | IntrospectionNamedTypeRef<IntrospectionInputType>
   | IntrospectionListTypeRef<IntrospectionInputTypeRef>
   | IntrospectionNonNullTypeRef<
-    | IntrospectionNamedTypeRef<IntrospectionInputType>
-    | IntrospectionListTypeRef<IntrospectionInputTypeRef>
-  >;
+      | IntrospectionNamedTypeRef<IntrospectionInputType>
+      | IntrospectionListTypeRef<IntrospectionInputTypeRef>
+    >;
 
 export interface IntrospectionNamedTypeRef<T extends IntrospectionType = IntrospectionType> {
   readonly kind: T['kind'];
