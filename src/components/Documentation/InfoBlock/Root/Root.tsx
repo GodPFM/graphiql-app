@@ -34,7 +34,7 @@ const Root = () => {
       {data.data.__schema.queryType ? (
         <Stack direction="row" alignItems="center">
           <button
-            onClick={() => handleClick('Query')}
+            onClick={() => handleClick(data.data.__schema.queryType.name)}
             className="flex items-center hover:bg-white rounded group px-3 w-full bg-transparent border-0"
           >
             <Typography fontFamily={'Source Code Pro'} className="text-[14px]">
@@ -44,7 +44,7 @@ const Root = () => {
               fontFamily={'Source Code Pro'}
               className="ml-2 text-[14px] text-color-documentation-secondary"
             >
-              Query
+              {data.data.__schema.queryType.name}
             </Typography>
             <ArrowForwardIcon className="w-3 h-3 ml-auto fill-none group-hover:fill-color-documentation-primary" />
           </button>
@@ -54,7 +54,7 @@ const Root = () => {
       {data.data.__schema.mutationType ? (
         <Stack direction="row" alignItems="center">
           <button
-            onClick={() => handleClick('Mutation')}
+            onClick={() => handleClick(data.data.__schema.mutationType.name)}
             className="flex items-center hover:bg-white rounded group px-3 w-full bg-transparent border-0"
           >
             <Typography fontFamily={'Source Code Pro'} className="text-[14px]">
@@ -64,7 +64,7 @@ const Root = () => {
               fontFamily={'Source Code Pro'}
               className="ml-2 text-[14px] text-color-documentation-secondary"
             >
-              Mutation
+              {data.data.__schema.mutationType.name}
             </Typography>
             <ArrowForwardIcon className="w-3 h-3 ml-auto fill-none group-hover:fill-color-documentation-primary" />
           </button>
@@ -74,7 +74,7 @@ const Root = () => {
       {data.data.__schema.subscriptionType ? (
         <Stack direction="row" alignItems="center">
           <button
-            onClick={() => handleClick('Subscription')}
+            onClick={() => handleClick(data.data.__schema.subscriptionType.name)}
             className="flex items-center hover:bg-white rounded group px-3 w-full bg-transparent border-0"
           >
             <Typography fontFamily={'Source Code Pro'} className="text-[14px]">
@@ -84,7 +84,7 @@ const Root = () => {
               fontFamily={'Source Code Pro'}
               className="ml-2 text-[14px] text-color-documentation-secondary"
             >
-              Subscription
+              {data.data.__schema.subscriptionType.name}
             </Typography>
             <ArrowForwardIcon className="w-3 h-3 ml-auto fill-none group-hover:fill-color-documentation-primary" />
           </button>
