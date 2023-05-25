@@ -9,7 +9,7 @@ import {
   resetNav,
 } from '@/store/reducers/document/slice';
 import { useGetDataMutation } from '@/store/api';
-import { getIntrospectionQuery } from '@/queries/newTestIntrospectionQuery';
+import { getIntrospectionQuery } from '@/queries/introspectionQuery';
 
 const Form = () => {
   const { link, firstLoad } = useAppSelector(selectDocument);
