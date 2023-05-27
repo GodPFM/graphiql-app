@@ -1,13 +1,13 @@
-import { Grid } from '@mui/material';
+import { Grid, CircularProgress } from '@mui/material';
 import React from 'react';
 import dynamic from 'next/dynamic';
 
 const Documentaion = dynamic(() => import('@/components/Documentation/Documentaion'), {
-  loading: () => <p>Loading...</p>,
+  loading: () => <CircularProgress color="inherit" />,
 });
 
 const EditorContainer = dynamic(() => import('@/components/EditorContainer/EditorContainer'), {
-  loading: () => <p>Loading...</p>,
+  loading: () => <CircularProgress color="inherit" />,
 });
 
 const Columns = () => {

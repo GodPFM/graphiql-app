@@ -1,11 +1,13 @@
 import GraphLogoBlock from '@/components/GraphLogoBlock/GraphLogoBlock';
 import React from 'react';
-import { wrapper } from '@/store/store';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { CircularProgress } from '@mui/material';
 import dynamic from 'next/dynamic';
 
+import { wrapper } from '@/store/store';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+
 const FormAuth = dynamic(() => import('@/components/Form/FormAuth'), {
-  loading: () => <p>Loading...</p>,
+  loading: () => <CircularProgress color="inherit" />,
 });
 
 const Auth = () => (
